@@ -3,11 +3,11 @@
 
 ## 使用
 
-### 点击扩展图标输入进行翻译
-
-![YoudaoDict Screenshot][2] &nbsp;&nbsp;&nbsp;&nbsp;
-
 ### 双击或按 Ctrl 对选择区域进行翻译
+
+![YoudaoDict Screenshot][2]
+
+### 点击扩展图标输入进行翻译
 
 ![YoudaoDict Screenshot][3] &nbsp;&nbsp;&nbsp;&nbsp;
 ![YoudaoDict Screenshot][4]
