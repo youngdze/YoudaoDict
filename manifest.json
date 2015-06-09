@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+
+  "name": "Youdao Dict",
+  "description": "有道词典 Chrome 扩展",
+  "version": "0.0.1",
+
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png",
+    "256": "icon.png"
+  },
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "http://fanyi.youdao.com/"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "all_frames": true,
+      "css": ["css/popover.css"],
+      "js": ["js/popover.js"]
+    }
+  ]
+}

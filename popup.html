@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Youdao Translation</title>
+    <link rel="stylesheet" href="lib/materialize/css/materialize.min.css?ver=0.96.1"/>
+    <link rel="stylesheet" href="css/popup.css"/>
+    <script src="lib/jquery/jquery.min.js?ver=2.1.4"></script>
+    <script src="lib/materialize/js/materialize.min.js?ver=0.96.1"></script>
+    <script src="js/popup.js"></script>
+</head>
+<body>
+    <div class="row" id="queryBox">
+        <form action="get" name="dictForm" id="dictForm" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="query" name="query" class="validate" placeholder="Query"/>
+                </div>
+                <!-- <div class="col s12">
+                    <button class="btn waves-effect waves-light right" type="submit" name="action">submit
+                        <i class="mdi-content-send right"></i>
+                    </button>
+                </div> -->
+            </div>
+        </form>
+    </div>
+    <div class="row" id="loading" hidden>
+        <div class="col s12">
+            <div class="progress">
+                <div class="indeterminate"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="resultBox" hidden>
+        <div class="col s12">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text" id="resultField">
+                    <span class="card-title" id="basic"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
