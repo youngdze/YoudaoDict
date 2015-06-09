@@ -21,6 +21,6 @@
 
 
 [1]: https://github.com/youngdze
-[2]: ./screenshot/youdao1.png
-[3]: ./screenshot/youdao2.png
-[4]: ./screenshot/youdao3.png
+[2]: screenshot/youdao1.PNG
+[3]: screenshot/youdao2.PNG
+[4]: screenshot/youdao3.PNG
