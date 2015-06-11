@@ -14,10 +14,7 @@ function save_options() {
 }
 
 function restore_options() {
-    chrome.storage.sync.get({
-        dblclick: true,
-        ctrl: true
-    }, function (items) {
+    chrome.storage.sync.get(function (items) {
         document.querySelector('#dblclick').checked = items.dblclick;
         document.querySelector('#ctrl').checked = items.ctrl;
     });

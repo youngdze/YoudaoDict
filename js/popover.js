@@ -166,10 +166,7 @@ function enableKeydown() {
 }
 
 (function () {
-    chrome.storage.sync.get({
-        "dblclick": true,
-        "ctrl": true
-    }, function (items) {
+    chrome.storage.sync.get(function (items) {
         if (items.dblclick) {
             enableDblclick();
         }
