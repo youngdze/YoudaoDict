@@ -1,7 +1,7 @@
 function translate(query, callback, errCallback) {
     var url = 'http://fanyi.youdao.com/openapi.do?keyfrom=YoungdzeBlog&key=498418215&type=data&doctype=json&version=1.1&q=';
     var req = new XMLHttpRequest();
-    req.open('GET', url + query);
+    req.open('GET', url + encodeURIComponent(query));
     req.responseType = 'json';
     req.onload = function () {
         var res = req.response;

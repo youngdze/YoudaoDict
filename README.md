@@ -12,6 +12,10 @@
 ![YoudaoDict Screenshot][3] &nbsp;&nbsp;&nbsp;&nbsp;
 ![YoudaoDict Screenshot][4]
 
+设置
+
+![YoudaoDict Screenshot][5]
+
 ## 版权
 
 * [youngdze][1]
@@ -21,6 +25,7 @@
 
 
 [1]: https://github.com/youngdze
-[2]: screenshot/youdao1.PNG
-[3]: screenshot/youdao2.PNG
-[4]: screenshot/youdao3.PNG
+[2]: screenshot/1.PNG
+[3]: screenshot/2.PNG
+[4]: screenshot/3.PNG
+[5]: screenshot/4.PNG

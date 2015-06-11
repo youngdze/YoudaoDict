@@ -17,7 +17,8 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "http://fanyi.youdao.com/"
+    "http://fanyi.youdao.com/",
+    "storage"
   ],
 
   "content_scripts": [
@@ -27,5 +28,10 @@
       "css": ["css/popover.css"],
       "js": ["js/popover.js"]
     }
-  ]
+  ],
+
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  }
 }

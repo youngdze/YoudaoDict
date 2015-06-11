@@ -135,29 +135,46 @@ function renderPop(resJson) {
     }
 }
 
-document.addEventListener('dblclick', function (ev) {
-    var text = window.getSelection().toString().trim();
-    if (text === null || text === undefined || text.length === 0) return;
+function enableDblclick() {
+    document.addEventListener('dblclick', function (ev) {
+        var text = window.getSelection().toString().trim();
+        if (text === null || text === undefined || text.length === 0) return;
 
-    initialPop(ev);
-    translate(text, function (res) {
-        renderPop(res);
-    }, function (errMessage) {
-        renderPop(errMessage);
+        initialPop(ev);
+        translate(text, function (res) {
+            renderPop(res);
+        }, function (errMessage) {
+            renderPop(errMessage);
+        });
     });
-});
+}
 
-document.addEventListener('keydown', function (ev) {
-    //console.log(String.fromCharCode(ev.keyCode));
-    if (!ev.ctrlKey) return;
-    var text = window.getSelection().toString().trim();
-    if (text === null || text === undefined || text.length === 0) return;
+function enableKeydown() {
+    document.addEventListener('keydown', function (ev) {
+        //console.log(String.fromCharCode(ev.keyCode));
+        if (!ev.ctrlKey) return;
+        var text = window.getSelection().toString().trim();
+        if (text === null || text === undefined || text.length === 0) return;
 
-    initialPop(ev);
-    translate(text, function (res) {
-        renderPop(res);
-    }, function (errMessage) {
-        renderPop(errMessage);
+        initialPop(ev);
+        translate(text, function (res) {
+            renderPop(res);
+        }, function (errMessage) {
+            renderPop(errMessage);
+        });
     });
-});
+}
 
+(function () {
+    chrome.storage.sync.get({
+        "dblclick": true,
+        "ctrl": true
+    }, function (items) {
+        if (items.dblclick) {
+            enableDblclick();
+        }
+        if (items.ctrl) {
+            enableKeydown();
+        }
+    });
+})();
