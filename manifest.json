@@ -12,6 +12,8 @@
     "256": "img/icon.png"
   },
 
+  "homepage_url": "https://github.com/youngdze/YoudaoDict",
+
   "background": {
     "persistent": false,
     "scripts": ["js/background.js"]
