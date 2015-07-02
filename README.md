@@ -1,4 +1,5 @@
 # YoudaoDict
+
 有道词典 Chrome 扩展，使用有道词典 api
 
 ## 使用
@@ -16,9 +17,9 @@
 
 ![YoudaoDict Screenshot][5]
 
-## 版权
+## 版权 LICENSE
 
-* [youngdze][1]
+* DO WHATEVER YOU WANT
 
 
 
