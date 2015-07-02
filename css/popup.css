@@ -26,11 +26,18 @@ body {
 }
 
 #basic {
-    font-size: 1.5rem;
+    display: block;
+    margin-bottom: .5rem;
+    font-size: 1.3rem;
     line-height: inherit;
+}
+
+.pronoun {
+    display: block;
+    margin-bottom: .3rem;
+    font-style: italic;;
 }
 
 input {
     font-size: 1.5rem !important;
 }
-

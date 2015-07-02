@@ -34,7 +34,16 @@ function renderResult(resultJson) {
         return;
     }
 
-    basic.textContent = resultJson.basic.explains[0];
+    basic.innerHTML = '<code class="pronoun">/' + (resultJson.basic.phonetic.split(';'))[0] + '/</code>';
+
+    for (var i = 0; i < resultJson.basic.explains.length; i++) {
+        if (i === 0) {
+            basic.innerHTML += resultJson.basic.explains[i];
+        } else {
+            basic.innerHTML += '<br>' + resultJson.basic.explains[i];
+        }
+    }
+
     var webTranslation = resultJson.web;
     for (var i = 0; i < webTranslation.length; i++) {
         var pEle = document.createElement('P');

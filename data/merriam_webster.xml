@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<entry_list version="1.0">
+    <entry id="reveal[1]">
+        <ew>reveal</ew>
+        <subj>RC-1#RJ-1#RE-1</subj>
+        <hw hindex="1">re*veal</hw>
+        <sound>
+            <wav>reveal01.wav</wav>
+            <wpr>ri-!vE(u)l</wpr>
+        </sound>
+        <pr>ri-ˈvēl</pr>
+        <fl>verb</fl>
+        <et>Middle English
+            <it>revelen,</it>
+            from Anglo-French
+            <it>reveler,</it>
+            from Latin
+            <it>revelare</it>
+            to uncover, reveal, from
+            <it>re-</it>
+            +
+            <it>velare</it>
+            to cover, veil, from
+            <it>velum</it>
+            veil
+        </et>
+        <def>
+            <vt>transitive verb</vt>
+            <date>14th century</date>
+            <sn>1</sn>
+            <dt>:to make known through divine inspiration</dt>
+            <sn>2</sn>
+            <dt>:to make (something secret or hidden) publicly or generally known
+                <vi>
+                    <it>reveal</it>
+                    a secret
+                </vi>
+            </dt>
+            <sn>3</sn>
+            <dt>:to open up to view :
+                <sx>display</sx>
+                <vi>the uncurtained window
+                    <it>reveal</it>
+                    <it>ed</it>
+                    a cluttered room
+                </vi>
+            </dt>
+        </def>
+        <uro>
+            <ure>re*veal*able</ure>
+            <sound>
+                <wav>reveal02.wav</wav>
+                <wpr>ri-!vE-lu-bul</wpr>
+            </sound>
+            <pr>-ˈvē-lə-bəl</pr>
+            <fl>adjective</fl>
+        </uro>
+        <uro>
+            <ure>re*veal*er</ure>
+            <fl>noun</fl>
+        </uro>
+        <pl>syn</pl>
+        <pt>
+            <sc>reveal</sc>
+            <sc>disclose</sc>
+            <sc>divulge</sc>
+            <sc>tell</sc>
+            <sc>betray</sc>
+            mean to make known what has been or should be concealed.
+            <sc>reveal</sc>
+            may apply to supernatural or inspired revelation of truths beyond the range of ordinary human vision or
+            reason
+            <vi>divine will as
+                <it>revealed</it>
+                in sacred writings
+            </vi>
+            .
+            <sc>disclose</sc>
+            may imply a discovering but more often an imparting of information previously kept secret
+            <vi>candidates must
+                <it>disclose</it>
+                their financial assets
+            </vi>
+            .
+            <sc>divulge</sc>
+            implies a disclosure involving some impropriety or breach of confidence
+            <vi>refused to
+                <it>divulge</it>
+                an anonymous source
+            </vi>
+            .
+            <sc>tell</sc>
+            implies an imparting of necessary or useful information
+            <vi>
+                <it>told</it>
+                them what he had overheard
+            </vi>
+            .
+            <sc>betray</sc>
+            implies a divulging that represents a breach of faith or an involuntary or unconscious disclosure
+            <vi>a blush that
+                <it>betrayed</it>
+                her embarrassment
+            </vi>
+            .
+        </pt>
+    </entry>
+    <entry id="reveal[2]">
+        <ew>reveal</ew>
+        <subj>AC</subj>
+        <hw hindex="2">reveal</hw>
+        <fl>noun</fl>
+        <et>alteration of earlier
+            <it>revale,</it>
+            probably ultimately from Middle French
+            <it>ravaler</it>
+            to reduce the depth of (masonry or wood), literally, to take back down, from Old French, from
+            <it>re- + avaler</it>
+            to let fall
+            <ma>vail</ma>
+        </et>
+        <def>
+            <date>1688</date>
+            <dt>:the side of an opening (as for a window) between a frame and the outer surface of a wall</dt>
+            <sd>also</sd>
+            <dt>:
+                <sx>jamb</sx>
+            </dt>
+        </def>
+    </entry>
+</entry_list>

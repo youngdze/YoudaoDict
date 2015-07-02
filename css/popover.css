@@ -18,8 +18,10 @@ a {
     background-color: #fff;
     border-radius: 2px; }
 .card .card-title {
+    display: block;
+    margin-bottom: 8px;
     color: #fff;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 300; }
 .card .card-title.activator {
     cursor: pointer; }
@@ -74,7 +76,7 @@ a {
     margin: 0;
     color: inherit; }
 .card .card-content .card-title {
-    line-height: 48px; }
+    line-height: inherit; }
 .card .card-action {
     border-top: 1px solid rgba(160, 160, 160, 0.2);
     padding: 20px; }
@@ -114,7 +116,6 @@ a {
 
 .card-wrapper {
     position: absolute;
-    max-width: 500px;
     line-height: 1.5;
     font-family: "Roboto", sans-serif;
     font-weight: normal;
@@ -131,9 +132,8 @@ a {
     padding: 12px !important;
 }
 
-.card-title {
-    font-size: 20px !important;
-    line-height: 30px !important;
+.pronoun {
+    display: block;
+    margin-bottom: .3rem;
+    font-style: italic;;
 }
-
-

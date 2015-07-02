@@ -124,9 +124,17 @@ function renderPop(resJson) {
         return;
     }
 
-    cardTitle.textContent = resJson.basic.explains[0];
-    var webTranslation = resJson.web;
+    cardTitle.innerHTML = '<code class="pronoun">/' + (resJson.basic.phonetic.split(';'))[0] + '/</code>';
 
+    for (var i = 0; i < resJson.basic.explains.length; i++) {
+        if (i === 0) {
+            cardTitle.innerHTML += resJson.basic.explains[i];
+        } else {
+            cardTitle.innerHTML += '<br>' + resJson.basic.explains[i];
+        }
+    }
+
+    var webTranslation = resJson.web;
     for (var i = 0; i < webTranslation.length; i++) {
         var pEle = document.createElement('P');
         pEle.className = 'web-translation';
