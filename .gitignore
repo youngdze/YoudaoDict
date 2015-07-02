@@ -30,3 +30,5 @@ node_modules
 
 # WebStorm config file
 .idea
+
+data
