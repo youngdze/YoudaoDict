@@ -5,11 +5,7 @@ function save_options() {
         dblclick: dblclick,
         ctrl: ctrl
     }, function() {
-        var status = document.querySelector('#save');
-        status.innerHTML= '<i class="mdi-action-done"></i>';
-        setTimeout(function() {
-            status.innerHTML = 'Save';
-        }, 750);
+        Materialize.toast('Saved', 500);
     });
 }
 
@@ -21,4 +17,11 @@ function restore_options() {
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
-document.querySelector('#save').addEventListener('click', save_options);
+
+var options = document.querySelectorAll('input[type=checkbox]');
+Object.keys(options).map(function (key) {
+    // detect if is number
+    if (!isNaN(key - 0)) {
+        options[key].addEventListener('click', save_options);
+    }
+});

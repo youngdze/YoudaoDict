@@ -85,8 +85,8 @@ function initialPop(ev) {
     var pos = getPositionByRange();
     var html =
     '<div id="cardWrapper" class="card-wrapper" style="left: ' + (pos.left - 0) + 'px; top: ' + (pos.top + window.scrollY + 28) + 'px;">' +
-        '<div class="card blue-grey darken-1">' +
-            '<div class="card-content white-text">' +
+        '<div class="card">' +
+            '<div class="card-content">' +
                 '<span class="card-title">Loading...</span>' +
             '</div>' +
         '</div>' +
