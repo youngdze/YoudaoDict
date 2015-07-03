@@ -34,7 +34,11 @@ function renderResult(resultJson) {
         return;
     }
 
-    basic.innerHTML = '<code class="pronoun">/' + (resultJson.basic.phonetic.split(';'))[0] + '/</code>';
+    if (resultJson.basic.phonetic != undefined) {
+        basic.innerHTML = '<code class="pronoun">/' + (resultJson.basic.phonetic.split(';'))[0] + '/</code>';
+    } else {
+        basic.innerHTML = '';
+    }
 
     for (var i = 0; i < resultJson.basic.explains.length; i++) {
         if (i === 0) {

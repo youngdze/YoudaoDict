@@ -84,7 +84,7 @@ function initialPop(ev) {
     //var pos = getPosition(ev);
     var pos = getPositionByRange();
     var html =
-    '<div id="cardWrapper" class="card-wrapper" style="left: ' + (pos.left - 0) + 'px; top: ' + (pos.top + window.scrollY + 20) + 'px;">' +
+    '<div id="cardWrapper" class="card-wrapper" style="left: ' + (pos.left - 0) + 'px; top: ' + (pos.top + window.scrollY + 28) + 'px;">' +
         '<div class="card blue-grey darken-1">' +
             '<div class="card-content white-text">' +
                 '<span class="card-title">Loading...</span>' +
@@ -124,7 +124,11 @@ function renderPop(resJson) {
         return;
     }
 
-    cardTitle.innerHTML = '<code class="pronoun">/' + (resJson.basic.phonetic.split(';'))[0] + '/</code>';
+    if (resJson.basic.phonetic != undefined) {
+        cardTitle.innerHTML = '<code class="pronoun">/' + (resJson.basic.phonetic.split(';'))[0] + '/</code>';
+    } else {
+        cardTitle.innerHTML = '';
+    }
 
     for (var i = 0; i < resJson.basic.explains.length; i++) {
         if (i === 0) {
