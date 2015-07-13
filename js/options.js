@@ -5,7 +5,7 @@ function save_options() {
         dblclick: dblclick,
         ctrl: ctrl
     }, function() {
-        Materialize.toast('Saved', 500);
+        Materialize.toast('设置成功', 500);
     });
 }
 
