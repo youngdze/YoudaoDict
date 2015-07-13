@@ -5,14 +5,15 @@
     border-radius: 5px;
     background-color: rgba(13, 13, 13, .8);
     box-shadow: 0 0 20px rgba(0, 0, 0, .8);
-    color: #fff;
+    color: #fff !important;
     font-size: 16px;
     font-weight: 300;
     font-family: "Roboto", 'Helvetica', sans-serif;
     line-height: 1.5;
     min-width: 300px;
     max-width: 500px;
-    z-index: 999;
+    z-index: 9999;
+    text-align: left;
 }
 
 .y-bubble p {
