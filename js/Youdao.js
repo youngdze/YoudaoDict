@@ -27,7 +27,13 @@ var Youdao = function (from, key, doctype, query) {
         req.send();
     }
 
-   function parseJsonContent (res) {
+    function isChinese(word) {
+        var re = /[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi;
+        return re.test(word);
+    }
+
+
+    function parseJsonContent (res) {
         var word, explains, pronoun, wav, relate = [], more;
 
         word = res.query;
@@ -44,7 +50,9 @@ var Youdao = function (from, key, doctype, query) {
                 pronoun = (res.basic.phonetic.split(';'))[0];
             }
 
-            wav = 'http://dict.youdao.com/dictvoice?audio=' + word + '&type=2';
+            if (!isChinese(word)) {
+                wav = 'http://dict.youdao.com/dictvoice?audio=' + word + '&type=2';
+            }
 
             if (res.web != undefined) {
                 relate = res.web;

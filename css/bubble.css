@@ -16,6 +16,10 @@
     text-align: left;
 }
 
+.y-bubble .y-bubble-word {
+    color: #f60;
+}
+
 .y-bubble p {
     margin: 2px 0;
     line-height: 20px;
