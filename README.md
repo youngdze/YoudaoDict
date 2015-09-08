@@ -1,3 +1,7 @@
+> 提示：本插件使用了 ECMAScript 6 新特性，如有不兼容情况出现，请升级至 Chrome v42 以上版本。
+
+> Warm tips: this extension contains new features of ECMAScript 6, please update your Chrome to v42 or above to support them.
+
 # YoudaoDict
 
 自制有道词典 Chrome 扩展，使用[有道词典 api](http://fanyi.youdao.com/openapi)

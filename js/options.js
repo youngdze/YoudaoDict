@@ -1,6 +1,8 @@
+"use strict";
+
 function save_options() {
-    var dblclick = document.querySelector('#dblclick').checked;
-    var ctrl = document.querySelector('#ctrl').checked;
+    let dblclick = document.querySelector('#dblclick').checked;
+    let ctrl = document.querySelector('#ctrl').checked;
     chrome.storage.sync.set({
         dblclick: dblclick,
         ctrl: ctrl
@@ -18,7 +20,7 @@ function restore_options() {
 
 document.addEventListener('DOMContentLoaded', restore_options);
 
-var options = document.querySelectorAll('input[type=checkbox]');
+let options = document.querySelectorAll('input[type=checkbox]');
 Object.keys(options).map(function (key) {
     // detect if is number
     if (!isNaN(key - 0)) {

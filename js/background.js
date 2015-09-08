@@ -1,4 +1,6 @@
-var defaultOptions = {
+"use strict";
+
+let defaultOptions = {
     dblclick: true,
     ctrl: true
 };
