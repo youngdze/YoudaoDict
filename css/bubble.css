@@ -21,6 +21,7 @@
 }
 
 .y-bubble p {
+    color: #fff !important;
     margin: 2px 0;
     line-height: 20px;
 }
