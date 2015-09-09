@@ -18,7 +18,7 @@
     };
 
     let init = function (details) {
-        if(details.reason === 'install'){
+        if (Object.is(details.reason, 'install')) {
             chrome.storage.sync.set(defaultOptions);
             chrome.tab.query({}, function( tabs ){
                 tabs.forEach(addYoudaoDict);

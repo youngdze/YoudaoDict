@@ -3,7 +3,7 @@
 {
     let modules = {};
 
-    modules.getTemplate = function () {
+    modules.prototype.getTemplate = function () {
         return new Promise(function (resolve, reject) {
             let req = new XMLHttpRequest();
             let templateUrl = chrome.extension.getURL('template/bubble.html');
@@ -24,12 +24,12 @@
         });
     };
 
-    modules.injectData = function (template, data) {
+    modules.prototype.injectData = function (template, data) {
         Mustache.parse(template);
         return Mustache.render(template, data);
     };
 
-    modules.renderBubble = function (rendered) {
+    modules.prototype.renderBubble = function (rendered) {
         if (document.getElementById('y-bubble')) {
             let unnecessaryBubble = document.getElementById('y-bubble');
             unnecessaryBubble.parentNode.removeChild(unnecessaryBubble);
@@ -91,7 +91,7 @@
         });
     };
 
-    modules.enableDblclick = function () {
+    modules.prototype.enableDblclick = function () {
         document.addEventListener('dblclick', function (ev) {
             //let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
             let from = 'YoungdzeBlog', resType = 'json', query = window.getSelection().toString().trim(), youdaoKey = 498418215;
@@ -117,13 +117,13 @@
         });
     };
 
-    modules.enableKeydown = function () {
+    modules.prototype.enableKeydown = function () {
         let map = [];
         document.addEventListener('keydown', function (ev) {
             map.push(ev.keyCode);
         });
         document.addEventListener('keyup', function (ev) {
-            if (_.size(map) === 1 && map[0] === 17) {
+            if (Object.is(_.size(map), 1) && Object.is(map[0], 17)) {
                 //let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
                 let from = 'YoungdzeBlog', resType = 'json', query = window.getSelection().toString().trim(), youdaoKey = 498418215;
                 if (_.isEmpty(query)) return;

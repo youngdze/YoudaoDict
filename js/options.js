@@ -3,7 +3,7 @@
 {
   let modules = {};
 
-  modules.save_options = function(){
+  modules.prototype.save_options = function(){
     let dblclick = document.querySelector('#dblclick').checked;
     let ctrl = document.querySelector('#ctrl').checked;
     chrome.storage.sync.set({
@@ -14,7 +14,7 @@
     });
   };
 
-  modules.restore_options = function(){
+  modules.prototype.restore_options = function(){
     chrome.storage.sync.get(function( items ){
       document.querySelector('#dblclick').checked = items.dblclick;
       document.querySelector('#ctrl').checked = items.ctrl;

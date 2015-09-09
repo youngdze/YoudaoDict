@@ -3,7 +3,7 @@
 define(['underscore'], function (_) {
     let modules = {};
 
-    modules.translate = function (query) {
+    modules.prototype.translate = function (query) {
         return new Promise(function (resolve, reject) {
             let url = 'https://fanyi.youdao.com/openapi.do?keyfrom=YoungdzeBlog&key=498418215&type=data&doctype=json&version=1.1&q=';
             let req = new XMLHttpRequest();
@@ -25,12 +25,12 @@ define(['underscore'], function (_) {
         });
     };
 
-    modules.isLoad = function (isLoading) {
+    modules.prototype.isLoad = function (isLoading) {
         document.getElementById('loading').hidden = !isLoading;
         document.getElementById('resultBox').hidden = isLoading;
     };
 
-    modules.renderResult = function (resultJson) {
+    modules.prototype.renderResult = function (resultJson) {
         modules.isLoad(false);
         let basic = document.getElementById('basic');
         while (!_.isNull(basic.nextElementSibling)) basic.nextElementSibling.remove();
@@ -70,7 +70,7 @@ define(['underscore'], function (_) {
         }
     };
 
-    modules.processResult = function (queryInput) {
+    modules.prototype.processResult = function (queryInput) {
         let query = queryInput.value;
         if (!query) return;
 
@@ -82,7 +82,7 @@ define(['underscore'], function (_) {
         });
     };
 
-    modules.onLoad = function () {
+    modules.prototype.onLoad = function () {
         let form = document.forms.namedItem('dictForm');
         let queryInput = form.query;
         let timeout;
