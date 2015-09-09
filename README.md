@@ -10,7 +10,7 @@
 
 * 去 [Chrome 官方商店](https://chrome.google.com/webstore/detail/youdao-dict/geboigdomoihijcamklnhlcgnnpdgkmg)安装。
 
-* 下载 [crx 文件](https://github.com/youngdze/YoudaoDict/blob/master/release/YoudaoDic.crx?raw=true)安装。
+* 下载 [crx 文件](https://github.com/youngdze/YoudaoDict/releases)安装。
 
 ## 使用
 

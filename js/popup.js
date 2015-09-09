@@ -28,7 +28,7 @@ define(['underscore'], function (_) {
     modules.isLoad = function (isLoading) {
         document.getElementById('loading').hidden = !isLoading;
         document.getElementById('resultBox').hidden = isLoading;
-    }
+    };
 
     modules.renderResult = function (resultJson) {
         modules.isLoad(false);
@@ -83,7 +83,6 @@ define(['underscore'], function (_) {
     };
 
     modules.onLoad = function () {
-        console.log('h')
         let form = document.forms.namedItem('dictForm');
         let queryInput = form.query;
         let timeout;

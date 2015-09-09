@@ -1,6 +1,6 @@
 "use strict";
 
-(function () {
+{
     let modules = {};
 
     modules.getTemplate = function () {
@@ -150,13 +150,13 @@
         });
     };
 
-    (function () {
+    {
         chrome.storage.sync.get(function (items) {
             if (items.dblclick) modules.enableDblclick();
             if (items.ctrl) modules.enableKeydown();
         })
-    }).call(this);
-}).call(this);
+    }
+}
 
 function y_playSound(wav_file) {
     document.getElementById('y-bubble-wav-wrapper').innerHTML = '<embed src="' + wav_file + '" type="audio/wav" autostart="true" style="width: 0; height: 0;">';

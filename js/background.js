@@ -1,28 +1,30 @@
 "use strict";
 
-let defaultOptions = {
-    dblclick: true,
-    ctrl: true
-};
+{
+    let defaultOptions = {
+        dblclick:true,
+        ctrl    :true
+    };
 
-chrome.runtime.onInstalled.addListener(init);
-
-function init(details) {
-    if (details.reason === 'install') {
-        chrome.storage.sync.set(defaultOptions);
-        chrome.tab.query({}, function (tabs) {
-            tabs.forEach(addYoudaoDict);
+    let addYoudaoDict = function ( tab ){
+        chrome.tabs.executeScript(tab.id, {
+            file    :"js/popover.js",
+            allFrame:true
         });
-    }
-}
+        chrome.tabs.insertCSS(tab.id, {
+            file    :"css/popover.css",
+            allFrame:true
+        })
+    };
 
-function addYoudaoDict(tab) {
-    chrome.tabs.executeScript(tab.id, {
-        file: "js/popover.js",
-        allFrame: true
-    });
-    chrome.tabs.insertCSS(tab.id, {
-        file: "css/popover.css",
-        allFrame: true
-    })
+    let init = function (details) {
+        if(details.reason === 'install'){
+            chrome.storage.sync.set(defaultOptions);
+            chrome.tab.query({}, function( tabs ){
+                tabs.forEach(addYoudaoDict);
+            });
+        }
+    };
+
+    chrome.runtime.onInstalled.addListener(init);
 }

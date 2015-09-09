@@ -5,14 +5,17 @@ require.config({
     paths: {
         underscore: "../lib/underscore/underscore-min",
         jQuery: "../lib/jquery/jquery.min",
-        mustache: "../lib/mustache/mustache.min"
+        mustache: "../lib/mustache/mustache.min",
+        materialize: "../lib/materialize/js/materialize.min"
     },
     shim: {
-        jQuery: {export: '$'},
-        underscore: {export: '_'}
+        jQuery: {exports: '$'},
+        underscore: {exports: '_'},
+        materialize: {exports: 'Materialize'}
     }
 });
 
 require(['jQuery', 'popup'], function ($, Popup) {
+    require(['materialize']);
     Popup.onLoad();
 });
