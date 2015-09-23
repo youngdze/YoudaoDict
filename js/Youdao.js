@@ -51,40 +51,40 @@ class Youdao {
     parseXmlContent(res) {
         let word, explains, pronoun, wav, relate = [], more;
 
-        word = res.getElementsByTagName('query')[0].textContent;
+        word = res.querySelector('query').textContent;
         if (_.isNull(res) || _.isEmpty(res)) {
             explains = 'Nothing found.';
         } else if (_.isString(res)) {
             explains = res.toString();
-        } else if (!_.size(res.getElementsByTagName('basic'))) {
-            explains = res.getElementsByTagName('translation')[0].getElementsByTagName('paragraph')[0].textContent;
+        } else if (!_.size(res.querySelectorAll('basic'))) {
+            explains = res.querySelector('translation').querySelector('paragraph').textContent;
         } else {
-            let explainsNode = res.getElementsByTagName('basic')[0].getElementsByTagName('explains')[0].getElementsByTagName('ex');
+            let explainsNode = res.querySelector('basic').querySelector('explains').querySelectorAll('ex');
             explains = [];
             for (let i = 0; i < _.size(explainsNode); i++) {
                 explains.push(explainsNode[i].textContent);
             }
-            pronoun = res.getElementsByTagName('basic')[0].getElementsByTagName('phonetic')[0].textContent || undefined;
+            pronoun = res.querySelector('basic').querySelector('phonetic').textContent || undefined;
 
             if (!this.isChinese(word)) {
                 wav = 'http://dict.youdao.com/dictvoice?audio=' + word + '&type=2';
             }
 
-            let relates = res.getElementsByTagName('web')[0].getElementsByTagName('explain');
+            let relates = res.querySelector('web').querySelector('explain');
             if (_.size(relates)) {
                 for (let i = 0; i < _.size(relates); i++) {
                     let dummy = {};
-                    dummy.key = relates[i].getElementsByTagName('key').textContent;
+                    dummy.key = relates[i].querySelector('key').textContent;
                     dummy.relate = [];
 
-                    for (let j = 0; j < _.size(relates[i].getElementsByTagName('value')[0].getElementsByTagName('ex')); j++) {
-                        dummy.relate.push(relates[i].getElementsByTagName('value')[0].getElementsByTagName('ex')[j].textContent);
+                    for (let j = 0; j < _.size(relates[i].querySelector('value').querySelectorAll('ex')); j++) {
+                        dummy.relate.push(relates[i].querySelector('value').querySelectorAll('ex')[j].textContent);
                     }
                     relate.push(dummy);
                 }
             }
         }
-        more = res.getElementsByTagName('query')[0].textContent;
+        more = res.querySelector('query')[0].textContent;
 
         return {
             word: word,

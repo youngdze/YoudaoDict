@@ -32,8 +32,8 @@
     }
 
     static renderBubble( rendered ){
-      if(document.getElementById('y-bubble')){
-        let unnecessaryBubble = document.getElementById('y-bubble');
+      if(document.querySelector('#y-bubble')){
+        let unnecessaryBubble = document.querySelector('#y-bubble');
         unnecessaryBubble.parentNode.removeChild(unnecessaryBubble);
       }
 
@@ -47,7 +47,7 @@
       let dummyChild = dummy.childNodes;
       document.body.appendChild(dummyChild[0]);
 
-      let bubble = document.getElementById('y-bubble');
+      let bubble = document.querySelector('#y-bubble');
 
       bubbleLeft = rect.left + rect.width / 2 - bubble.offsetWidth / 2;
 
@@ -64,7 +64,7 @@
       if(rect.top < bubble.offsetHeight){
         bubbleTop = rect.top + window.scrollY + rect.height + 8;
 
-        let bubbleArrow = document.getElementById('y-arrow');
+        let bubbleArrow = document.querySelector('#y-arrow');
         bubbleArrow.style.borderBottom = '10px solid rgba(13, 13, 13, .8)';
         bubbleArrow.style.borderTop = 0;
         bubbleArrow.style.top = '-8px';
@@ -72,7 +72,7 @@
       } else{
         bubbleTop = rect.top + window.scrollY - bubble.offsetHeight - 10;
 
-        let bubbleArrow = document.getElementById('y-arrow');
+        let bubbleArrow = document.querySelector('#y-arrow');
         bubbleArrow.style.borderBottom = 0;
         bubbleArrow.style.borderTop = '10px solid rgba(13, 13, 13, .8)';
         bubbleArrow.style.top = bubble.offsetHeight + 'px';
@@ -162,5 +162,5 @@
 }
 
 function y_playSound( wav_file ){
-  document.getElementById('y-bubble-wav-wrapper').innerHTML = '<embed src="' + wav_file + '" type="audio/wav" autostart="true" style="width: 0; height: 0;">';
+  document.querySelector('#y-bubble-wav-wrapper').innerHTML = '<embed src="' + wav_file + '" type="audio/wav" autostart="true" style="width: 0; height: 0;">';
 }

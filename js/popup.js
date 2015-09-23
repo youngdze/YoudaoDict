@@ -28,13 +28,13 @@ define(['underscore'], function( _ ){
     }
 
     static isLoad( isLoading ){
-      document.getElementById('loading').hidden = !isLoading;
-      document.getElementById('resultBox').hidden = isLoading;
+      document.querySelector('#loading').hidden = !isLoading;
+      document.querySelector('#resultBox').hidden = isLoading;
     }
 
     static renderResult( resultJson ){
       Module.isLoad(false);
-      let basic = document.getElementById('basic');
+      let basic = document.querySelector('#basic');
       while(!_.isNull(basic.nextElementSibling)) basic.nextElementSibling.remove();
 
       if(!resultJson){
@@ -68,7 +68,7 @@ define(['underscore'], function( _ ){
         var pEle = document.createElement('P');
         pEle.className = 'web-translation';
         pEle.textContent = webTranslation[i].key + ':  ' + webTranslation[i].value.join(', ');
-        document.getElementById('resultField').appendChild(pEle);
+        document.querySelector('#resultField').appendChild(pEle);
       }
     }
 
