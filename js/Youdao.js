@@ -1,5 +1,7 @@
 "use strict";
 
+let _= require('underscore');
+
 class Youdao {
     constructor(from, key, resType, query) {
         this.from = from;
@@ -9,7 +11,7 @@ class Youdao {
         this.requestUrl = 'https://fanyi.youdao.com/openapi.do?keyfrom=' + this.from + '&key=' + this.key + '&type=data&doctype=' + this.resType + '&version=1.1&q=';
     }
 
-    isChinese(query) {
+    static isChinese(query) {
         const re = /[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi;
         return re.test(query);
     }
@@ -120,3 +122,5 @@ class Youdao {
         });
     }
 }
+
+module.exports = Youdao;
