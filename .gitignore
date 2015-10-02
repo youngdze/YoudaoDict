@@ -31,4 +31,4 @@ node_modules
 # WebStorm config file
 .idea
 
-bundle
+build
