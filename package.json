@@ -32,7 +32,7 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "postinstall": "webpack",
+    "prestart": "webpack",
     "start": "node --harmony server.js"
   }
 }
