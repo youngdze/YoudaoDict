@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
   context: path.resolve(__dirname),
-  entry: './js/bubble.js',
+  entry: './js/app.js',
 
   output: {
     path: path.resolve(__dirname, 'build'),

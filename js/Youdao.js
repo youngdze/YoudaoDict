@@ -31,7 +31,7 @@ class Youdao {
             if (res.basic.phonetic) {
                 pronoun = (res.basic.phonetic.split(';'))[0];
             }
-            if (!this.isChinese(word)) {
+            if (!Youdao.isChinese(word)) {
                 wav = `http://dict.youdao.com/dictvoice?audio=${word}&type=2`;
             }
             if (res.web) {
