@@ -92,7 +92,7 @@ define(['underscore'], function( _ ){
 
       form.addEventListener('submit', function( ev ){
         ev.preventDefault();
-        modules.processResult(queryInput);
+        Module.processResult(queryInput);
       });
 
       queryInput.addEventListener('keyup', function( ev ){
@@ -103,7 +103,7 @@ define(['underscore'], function( _ ){
         }
 
         timeout = setTimeout(function(){
-          modules.processResult(queryInput);
+          Module.processResult(queryInput);
         }, 700);
       });
     }

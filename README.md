@@ -4,6 +4,11 @@
 
 # YoudaoDict
 
+```bash
+npm install
+webpack -p
+```
+
 自制有道词典 Chrome 扩展，使用[有道词典 api](http://fanyi.youdao.com/openapi)
 
 ## Install 安装

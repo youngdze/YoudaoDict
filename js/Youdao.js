@@ -1,6 +1,6 @@
 "use strict";
 
-let _= require('underscore');
+let _ = require('underscore');
 
 class Youdao {
     constructor(from, key, resType, query) {
@@ -100,24 +100,42 @@ class Youdao {
 
     getContent() {
         let _this = this;
+
         return new Promise((resolve, reject) => {
-            let req = new XMLHttpRequest();
-            req.open('GET', _this.requestUrl + encodeURIComponent(_this.query));
-            req.responseType = Object.is(_this.resType.toLowerCase(), 'xml') ? 'document' : 'json';
-            req.onload = () => {
-                if (Object.is(req.readyState, 4)) {
-                    if (Object.is(req.status, 200)) {
-                        let res = req.response;
-                        let result = Object.is(_this.resType.toLowerCase(), 'xml') ? _this.parseXmlContent(res) : _this.parseJsonContent(res);
-                        resolve(result);
+            if (!self.fetch) self.fetch = require('./fetch.js');
+            fetch(this.requestUrl + encodeURIComponent(this.query))
+                .then(res => {
+                    if (res.ok) {
+                        // TODO judge res type
+                        res.json().then(data => {
+                            let result = _this.parseJsonContent(data);
+                            resolve(result);
+                        });
                     } else {
                         reject('Search failed');
                     }
-                }
-            };
-            req.onerror = () => reject('Search failed');
-            req.send();
+                }, err => {
+                    reject('Search failed');
+                });
         });
+        //return new Promise((resolve, reject) => {
+        //    let req = new XMLHttpRequest();
+        //    req.open('GET', _this.requestUrl + encodeURIComponent(_this.query));
+        //    req.responseType = Object.is(_this.resType.toLowerCase(), 'xml') ? 'document' : 'json';
+        //    req.onload = () => {
+        //        if (Object.is(req.readyState, 4)) {
+        //            if (Object.is(req.status, 200)) {
+        //                let res = req.response;
+        //                let result = Object.is(res.resType.toLowerCase(), 'xml') ? _this.parseXmlContent(res) : _this.parseJsonContent(res);
+        //                resolve(result);
+        //            } else {
+        //                reject('Search failed');
+        //            }
+        //        }
+        //    };
+        //    req.onerror = () => reject('Search failed');
+        //    req.send();
+        //});
     }
 }
 
