@@ -2,39 +2,11 @@
 
 // TODO React support
 require('../css/bubble.less');
-let _ = require('underscore'),
-  Mustache = require('mustache');
-
+let _ = require('underscore');
 let Youdao = require('./Youdao.js');
 
 class Module {
   constructor(){
-  }
-
-  static getTemplate(){
-    return new Promise(function( resolve, reject ){
-      let req = new XMLHttpRequest();
-      let templateUrl = chrome.extension.getURL('template/bubble.html');
-      req.open('GET', templateUrl);
-      req.onload = function(){
-        if(Object.is(req.readyState, 4)){
-          if(Object.is(req.status, 200)){
-            resolve(req.response);
-          } else{
-            reject(req.req.status);
-          }
-        }
-      };
-      req.onerror = function(){
-        reject('Template not found');
-      };
-      req.send();
-    });
-  }
-
-  static injectData( template, data ){
-    Mustache.parse(template);
-    return Mustache.render(template, data);
   }
 
   static renderBubble( rendered ){
@@ -74,84 +46,60 @@ class Module {
       bubbleArrow.style.borderBottom = '10px solid rgba(13, 13, 13, .8)';
       bubbleArrow.style.borderTop = 0;
       bubbleArrow.style.top = '-8px';
-      bubbleArrow.style.left = arrowRelativeLeft + 'px';
+      bubbleArrow.style.left = `${arrowRelativeLeft}px`;
     } else{
       bubbleTop = rect.top + window.scrollY - bubble.offsetHeight - 10;
 
       let bubbleArrow = document.querySelector('#y-arrow');
       bubbleArrow.style.borderBottom = 0;
       bubbleArrow.style.borderTop = '10px solid rgba(13, 13, 13, .8)';
-      bubbleArrow.style.top = bubble.offsetHeight + 'px';
-      bubbleArrow.style.left = arrowRelativeLeft + 'px';
+      bubbleArrow.style.top = `${bubble.offsetHeight}px`;
+      bubbleArrow.style.left = `${arrowRelativeLeft}px`;
     }
 
-    bubble.style.left = bubbleLeft + 'px';
-    bubble.style.top = bubbleTop + 'px';
+    bubble.style.left = `${bubbleLeft}px`;
+    bubble.style.top = `${bubbleTop}px`;
 
 
-    document.addEventListener('click', function( ev ){
+    document.addEventListener('click', ev => {
       if(bubble.parentNode){
         bubble.parentNode.removeChild(bubble);
       }
     });
-    bubble.addEventListener('click', function( ev ){
+    bubble.addEventListener('click', ev => {
       ev.stopPropagation();
     });
   }
 
   static enableDblclick(){
-    document.addEventListener('dblclick', function( ev ){
-      //let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
-      let from = 'YoungdzeBlog', resType = 'json', query = window.getSelection().toString().trim(), youdaoKey = 498418215;
+    document.addEventListener('dblclick', ev => {
+      let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
       if(_.isEmpty(query)) return;
 
-      Module.getTemplate()
-        .then(function( template ){
-          let rendered;
-          rendered = Module.injectData(template, {loading:true});
-          Module.renderBubble(rendered);
-
-          let youdao = new Youdao(from, youdaoKey, resType, query);
-          youdao.getContent()
-            .then(function( data ){
-              data.loading = false;
-              rendered = Module.injectData(template, data);
-              Module.renderBubble(rendered);
-            }).catch(function( err ){
-              rendered = Module.injectData(template, {explains:err});
-              Module.renderBubble(rendered);
-            });
+      let youdao = new Youdao(from, youdaoKey, resType, query);
+      youdao.getContent()
+        .then(data => {
+          data.loading = false;
+          Module.renderBubble(require('../template/bubble.jade')(data));
+        }).catch(err => {
+          Module.renderBubble(require('../template/bubble.jade')({explains:err}));
         });
     });
   }
 
   static enableKeydown(){
     let map = [];
-    document.addEventListener('keydown', function( ev ){
-      map.push(ev.keyCode);
-    });
-    document.addEventListener('keyup', function( ev ){
+    document.addEventListener('keydown', ev => map.push(ev.keyCode));
+    document.addEventListener('keyup', ev => {
       if(Object.is(_.size(map), 1) && Object.is(map[0], 17)){
-        //let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
-        let from = 'YoungdzeBlog', resType = 'json', query = window.getSelection().toString().trim(), youdaoKey = 498418215;
+        let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
         if(_.isEmpty(query)) return;
-
-        Module.getTemplate()
-          .then(function( template ){
-            let rendered;
-            rendered = Module.injectData(template, {loading:true});
-            Module.renderBubble(rendered);
-
-            let youdao = new Youdao(from, youdaoKey, resType, query);
-            youdao.getContent()
-              .then(function( data ){
-                data.loading = false;
-                rendered = Module.injectData(template, data);
-                Module.renderBubble(rendered);
-              }).catch(function( err ){
-                rendered = Module.injectData(template, {explains:err});
-                Module.renderBubble(rendered);
-              });
+        youdao.getContent()
+          .then(data => {
+            data.loading = false;
+            Module.renderBubble(require('../template/bubble.jade')(data));
+          }).catch(err => {
+            Module.renderBubble(require('../template/bubble.jade')({explains:err}));
           });
       }
       map = [];
