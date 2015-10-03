@@ -8,10 +8,8 @@
             .y-bubble-query
                 b.y-bubble-word #{word}
                 if pronoun
-                    | &nbsp;
-                    i /#{pronoun}/
+                    i &nbsp;&nbsp;/#{pronoun}/&nbsp;&nbsp;
                         if wav
-                            | &nbsp;
                             a#y-bubble-wav(href='javascript:void(0)', onclick='document.querySelector("#y-audio").src="#{wav}";document.querySelector("#y-audio").play();')
                                 svg#Capa_1(version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', x='0px', y='0px', width='1em', height='1em', viewbox='0 0 465.256 465.256', style='enable-background:new 0 0 465.256 465.256; fill: #ffffff; vertical-align: middle;', xml:space='preserve')
                                     g
@@ -25,12 +23,14 @@
                             audio#y-audio(style='display: none;', src='')
             .y-bubble-explains
                 if explains
-                    p #{explains}
+                    each explain in explains
+                        p #{explain}
             .y-bubble-relate
                 if relate
-                    p
-                        | #{key}
-                        if value
-                            | #{value}
+                    each r in relate
+                        p
+                            | #{r.key}:&nbsp;
+                            if r.value
+                                | #{r.value}
             .y-bubble-more
                 a(href='#{more}', target='_blank') More >>
