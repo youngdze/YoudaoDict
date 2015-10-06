@@ -94,6 +94,8 @@ class Module {
             if (Object.is(_.size(map), 1) && Object.is(map[0], 17)) {
                 let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
                 if (_.isEmpty(query)) return;
+
+                let youdao = new Youdao(from, youdaoKey, resType, query);
                 youdao.getContent()
                     .then(data => {
                         data.loading = false;
