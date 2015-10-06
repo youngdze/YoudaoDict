@@ -1,7 +1,3 @@
-> 提示：本插件使用了 ECMAScript 6 新特性，请升级至 Chrome v42 以上版本进行支持。
-
-> Warm tips: this extension contains new features of ECMAScript 6, please update your Chrome to v42 or above to support them.
-
 # YoudaoDict
 
 ```bash
