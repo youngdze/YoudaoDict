@@ -118,24 +118,6 @@ class Youdao {
                     reject('Search failed');
                 });
         });
-        //return new Promise((resolve, reject) => {
-        //    let req = new XMLHttpRequest();
-        //    req.open('GET', _this.requestUrl + encodeURIComponent(_this.query));
-        //    req.responseType = Object.is(_this.resType.toLowerCase(), 'xml') ? 'document' : 'json';
-        //    req.onload = () => {
-        //        if (Object.is(req.readyState, 4)) {
-        //            if (Object.is(req.status, 200)) {
-        //                let res = req.response;
-        //                let result = Object.is(res.resType.toLowerCase(), 'xml') ? _this.parseXmlContent(res) : _this.parseJsonContent(res);
-        //                resolve(result);
-        //            } else {
-        //                reject('Search failed');
-        //            }
-        //        }
-        //    };
-        //    req.onerror = () => reject('Search failed');
-        //    req.send();
-        //});
     }
 }
 
