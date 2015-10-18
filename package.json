@@ -1,6 +1,6 @@
 {
   "name": "youdao-dict",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Youdao Dict using Youdao api",
   "main": "index.js",
   "repository": {
