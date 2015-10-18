@@ -23,8 +23,11 @@
                             audio#y-audio(style='display: none;', src='')
             .y-bubble-explains
                 if explains
-                    each explain in explains
-                        p #{explain}
+                    if Array.isArray(explains)
+                        each explain in explains
+                            p #{explain}
+                    else
+                        p #{explains}
             .y-bubble-relate
                 if relate
                     each r in relate
