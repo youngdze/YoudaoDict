@@ -4,10 +4,7 @@ let _ = require('underscore');
 
 class Youdao {
     constructor(from, key, resType, query) {
-        this.from = from;
-        this.key = key;
-        this.resType = resType;
-        this.query = query;
+        [this.from, this.key, this.resType, this.query] = [from, key, resType, query];
         this.requestUrl = `https://fanyi.youdao.com/openapi.do?keyfrom=${this.from}&key=${this.key}&type=data&doctype=${this.resType}&version=1.1&q=`;
     }
 
@@ -28,15 +25,9 @@ class Youdao {
             explains = res.translation[0];
         } else {
             explains = res.basic.explains;
-            if (res.basic.phonetic) {
-                pronoun = (res.basic.phonetic.split(';'))[0];
-            }
-            if (!Youdao.isChinese(word)) {
-                wav = `http://dict.youdao.com/dictvoice?audio=${word}&type=2`;
-            }
-            if (res.web) {
-                relate = res.web;
-            }
+            res.basic.phonetic && (pronoun = res.basic.phonetic.split(';')[0]);
+            !Youdao.isChinese(word) && (wav = `http://dict.youdao.com/dictvoice?audio=${word}&type=2`);
+            res.web && (relate = res.web);
         }
         more = `http://dict.youdao.com/search?q=${res.query}`;
 
@@ -62,28 +53,18 @@ class Youdao {
             explains = res.querySelector('translation').querySelector('paragraph').textContent;
         } else {
             let explainsNode = res.querySelector('basic').querySelector('explains').querySelectorAll('ex');
-            explains = [];
-            for (let i = 0; i < _.size(explainsNode); i++) {
-                explains.push(explainsNode[i].textContent);
-            }
+            explains = _.map(explainsNode, ( v, k ) => { return v.textContent; });
             pronoun = res.querySelector('basic').querySelector('phonetic').textContent || undefined;
-
-            if (!Youdao.isChinese(word)) {
-                wav = `http://dict.youdao.com/dictvoice?audio=${word}&type=2`;
-            }
+            !Youdao.isChinese(word) && (wav = `http://dict.youdao.com/dictvoice?audio=${word}&type=2`);
 
             let relates = res.querySelector('web').querySelector('explain');
             if (_.size(relates)) {
-                for (let i = 0; i < _.size(relates); i++) {
+                relate = _.map(relates, (v, k) => {
                     let dummy = {};
-                    dummy.key = relates[i].querySelector('key').textContent;
-                    dummy.relate = [];
-
-                    for (let j = 0; j < _.size(relates[i].querySelector('value').querySelectorAll('ex')); j++) {
-                        dummy.relate.push(relates[i].querySelector('value').querySelectorAll('ex')[j].textContent);
-                    }
-                    relate.push(dummy);
-                }
+                    dummy.key = v.querySelector('key').textContent;
+                    dummy.relate = _.map(v.querySelector('value').querySelectorAll('ex'), (val, key) => { return val.textContent; });
+                    return dummy;
+                });
             }
         }
         more = res.querySelector('query')[0].textContent;
@@ -118,24 +99,6 @@ class Youdao {
                     reject('Search failed');
                 });
         });
-        //return new Promise((resolve, reject) => {
-        //    let req = new XMLHttpRequest();
-        //    req.open('GET', _this.requestUrl + encodeURIComponent(_this.query));
-        //    req.responseType = Object.is(_this.resType.toLowerCase(), 'xml') ? 'document' : 'json';
-        //    req.onload = () => {
-        //        if (Object.is(req.readyState, 4)) {
-        //            if (Object.is(req.status, 200)) {
-        //                let res = req.response;
-        //                let result = Object.is(res.resType.toLowerCase(), 'xml') ? _this.parseXmlContent(res) : _this.parseJsonContent(res);
-        //                resolve(result);
-        //            } else {
-        //                reject('Search failed');
-        //            }
-        //        }
-        //    };
-        //    req.onerror = () => reject('Search failed');
-        //    req.send();
-        //});
     }
 }
 
