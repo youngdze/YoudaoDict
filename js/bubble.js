@@ -76,6 +76,7 @@ class Module {
             let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
             if (_.isEmpty(query)) return;
 
+            Module.renderBubble(require('../template/bubble.jade')({explains: 'Searching...'}));
             let youdao = new Youdao(from, youdaoKey, resType, query);
             youdao.getContent()
                 .then(data => {
@@ -95,6 +96,7 @@ class Module {
                 let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
                 if (_.isEmpty(query)) return;
 
+                Module.renderBubble(require('../template/bubble.jade')({explains: 'Searching...'}));
                 let youdao = new Youdao(from, youdaoKey, resType, query);
                 youdao.getContent()
                     .then(data => {
