@@ -1,42 +1,45 @@
-var path = require('path');
-var webpack = require('webpack');
+'use strict';
+
+const path = require('path');
+const webpack = require('webpack');
+const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 module.exports = {
-    context: path.resolve(__dirname),
-    entry: './js/app.js',
+  context: path.join(__dirname),
+  entry: {
+    './js/bubble': ['./src/app.js'],
+    './js/popup': ['./src/popup.js'],
+    './js/background': ['./src/background.js'],
+    './js/options': ['./src/options.js']
+  },
+  output: {
+    path: path.resolve(__dirname, 'build'),
+    filename: '[name].js'
+  },
+  module: {
+    loaders: [{
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      loader: 'babel',
+      query: {
+        presets: ['es2015', 'stage-0']
+      }
+    },{
+      test: /\.s?css$/,
+      loaders: ['style', 'css', 'sass'],
+      exclude: /node_modules/
+    }, {
+      test: /\.(eot|ttf|woff|woff2|svg)$/,
+      loader: 'file?name=font/[name].[ext]',
+      exclude: /node_modules/
+    }, {
+      test: /\.jade$/,
+      loader: 'jade',
+      exclude: /node_modules/
+    }]
+  },
 
-    output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
-    },
-
-    module: {
-        loaders: [
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel',
-                query: {
-                    optional: ['runtime'],
-                    stage: 0
-                }
-            },
-            {
-                test: /\.less$/,
-                loader: 'style!css!less'
-            },
-            {
-                test: /\.jade$/,
-                loader: 'jade'
-            }
-        ]
-    },
-
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
-    ]
+  plugins: [
+    // new UglifyJsPlugin({compress: {warnings: false}})
+  ]
 };

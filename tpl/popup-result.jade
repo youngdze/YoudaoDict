@@ -1,0 +1,32 @@
+if loading
+  .loading.row
+    .col.s12
+      .progress
+        .indeterminate
+.resultBox.row
+  .col.s12
+    .card.blue-grey.darken-1
+      if !loading
+        .resultField.card-content.white-text
+          span.basic.card-title
+            if error
+              | #{error}
+            else
+              if pronoun
+                code.pronoun /#{pronoun}/
+              if explains
+                if Array.isArray(explains)
+                  each explain in explains
+                    | #{explain}
+                    br
+                else
+                  | #{explains}
+          if relate
+            each r in relate
+              p.web-translation 
+                | #{r.key}:&nbsp;
+                if r.value
+                | #{r.value}
+        if !error
+          .card-action
+            span#addToWordBook.card-action(data-word='#{word}') 添加到有道单词本

@@ -1,0 +1,17 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title Youdao Dict Options
+  body
+    .container
+      .row(style='margin-bottom: 40px;')
+        p
+          input#dblclick(type='checkbox', name='dblclick')
+          label(for='dblclick') &#x53CC;&#x51FB;&#x7FFB;&#x8BD1;
+        p
+          input#ctrl(type='checkbox', name='ctrl')
+          label(for='ctrl') &#x6309;&#x4F4F; Ctrl &#x7FFB;&#x8BD1;
+    script(src='../lib/jquery/jquery.min.js')
+    script(src='../lib/materialize/js/materialize.min.js')
+    script(src='js/options.js')

@@ -1,0 +1,15 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title YoudaoDict popup
+  body
+    .queryBox.row
+      form.dictForm.col.s12(action='get', name='dictForm')
+        .row
+          .input-field.col.s12
+            input.query.validate(type='text', name='query', placeholder='Query')
+    #resultWrapper
+    script(src='../lib/jquery/jquery.min.js')
+    script(src='../lib/materialize/js/materialize.min.js')
+    script(type='text/javascript', src='js/popup.js')

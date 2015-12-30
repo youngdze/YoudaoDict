@@ -6,26 +6,28 @@
   "version": "0.2.3",
 
   "icons": {
-    "16": "img/icon.png",
-    "48": "img/icon.png",
-    "128": "img/icon.png",
-    "256": "img/icon.png"
+    "16": "build/img/icon.png",
+    "48": "build/img/icon.png",
+    "128": "build/img/icon.png",
+    "256": "build/img/icon.png"
   },
 
   "homepage_url": "https://chrome.google.com/webstore/detail/youdao-dict/geboigdomoihijcamklnhlcgnnpdgkmg",
 
   "background": {
     "persistent": false,
-    "scripts": ["js/background.js"]
+    "scripts": ["build/js/background.js"]
   },
 
   "browser_action": {
-    "default_icon": "img/icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "build/img/icon.png",
+    "default_popup": "build/popup.html"
   },
 
   "permissions": [
+    "cookies",
     "http://fanyi.youdao.com/",
+    "http://dict.youdao.com/",
     "storage"
   ],
 
@@ -33,11 +35,8 @@
     {
       "matches": ["*://*/*"],
       "all_frames": true,
-      "css": [
-      ],
-      "js": [
-        "build/bundle.js"
-      ]
+      "css": [],
+      "js": ["build/js/bubble.js"]
     }
   ],
 
@@ -45,7 +44,7 @@
   ],
 
   "options_ui": {
-    "page": "options.html",
+    "page": "build/options.html",
     "chrome_style": true
   }
 }
