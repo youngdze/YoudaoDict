@@ -6,7 +6,7 @@ class Youdao {
     this.requestUrl = `https://fanyi.youdao.com/openapi.do?keyfrom=${this.from}&key=${this.key}&type=data&doctype=${this.resType}&version=1.1&q=`;
   }
 
-  static isChinese(query) {
+  isChinese(query) {
     const re = /[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi;
     return re.test(query);
   }
@@ -25,7 +25,7 @@ class Youdao {
     } else {
       explains = res.basic.explains;
       res.basic.phonetic && (pronoun = res.basic.phonetic.split(';')[0]);
-      !Youdao.isChinese(word) && (wav = `http://dict.youdao.com/dictvoice?audio=${word}&type=2`);
+      !this.isChinese(word) && (wav = `https://dict.youdao.com/dictvoice?audio=${word}&type=2`);
       res.web && (relate = res.web);
     }
     more = `http://dict.youdao.com/search?q=${res.query}`;
@@ -55,7 +55,7 @@ class Youdao {
       let explainsNode = res.querySelector('basic').querySelector('explains').querySelectorAll('ex');
       explains = explainsNode.map(v => v.textContent);
       pronoun = res.querySelector('basic').querySelector('phonetic').textContent || undefined;
-      !Youdao.isChinese(word) && (wav = `http://dict.youdao.com/dictvoice?audio=${word}&type=2`);
+      !this.isChinese(word) && (wav = `https://dict.youdao.com/dictvoice?audio=${word}&type=2`);
 
       let relates = res.querySelector('web').querySelector('explain');
       if (relates.length) {

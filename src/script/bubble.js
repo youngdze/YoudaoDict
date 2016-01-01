@@ -4,7 +4,7 @@ import '../style/bubble.scss';
 import Youdao from './util/youdao';
 
 class Bubble {
-  static renderBubble(rendered) {
+  static renderBubble(tpl) {
     if (document.querySelector('#y-bubble')) {
       let unnecessaryBubble = document.querySelector('#y-bubble');
       unnecessaryBubble.parentNode.removeChild(unnecessaryBubble);
@@ -16,7 +16,7 @@ class Bubble {
     let bubbleLeft, bubbleTop, arrowRelativeLeft;
 
     let dummy = document.createElement('DIV');
-    dummy.innerHTML = rendered.trim();
+    dummy.innerHTML = tpl.trim();
     let dummyChild = dummy.childNodes;
     document.body.appendChild(dummyChild[0]);
 
@@ -64,6 +64,9 @@ class Bubble {
     bubble.addEventListener('click', ev => {
       ev.stopPropagation();
     });
+
+    Bubble.audioPlay();
+    Bubble.addToWordBook();
   }
 
   static enableDblclick(options) {
@@ -78,7 +81,6 @@ class Bubble {
           data.loading = false;
           if(options && options.wordbook) data.wordbook = options.wordbook;
           Bubble.renderBubble(require('../tpl/bubble.jade')(data));
-          Bubble.addToWordBook();
         }).catch(err => {
           Bubble.renderBubble(require('../tpl/bubble.jade')({explains: err}));
         });
@@ -100,13 +102,23 @@ class Bubble {
             data.loading = false;
             if(options && options.wordbook) data.wordbook = options.wordbook;
             Bubble.renderBubble(require('../tpl/bubble.jade')(data));
-            Bubble.addToWordBook();
           }).catch(err => {
             Bubble.renderBubble(require('../tpl/bubble.jade')({explains: err}));
           });
       }
       map = [];
     });
+  }
+
+  static audioPlay() {
+    let audioAction = document.querySelector('#y-bubble-wav');
+    if(audioAction) {
+      audioAction.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        let audioNode = document.querySelector('#y-audio');
+        audioNode.play();
+      });
+    }
   }
 
   static addToWordBook() {

@@ -7,42 +7,12 @@ import Youdao from './util/youdao';
 class Popup {
   static renderResult(resultJson) {
     resultWrapper.innerHTML = require('../tpl/popup-result.jade')(resultJson);
-
-    let audioAction = document.querySelector('#wav'),
-      addToWordBookAction = document.querySelector('#addToWordBook'),
-      moreAction = document.querySelector('#more');
-
-    if(audioAction) {
-      audioAction.addEventListener('click', (ev) => {
-        ev.preventDefault();
-        let audioNode = document.querySelector('#audio');
-        audioNode.src = resultJson.wav;
-        audioNode.play();
-      });
-    }
-
-    if(addToWordBookAction) {
-      addToWordBookAction.addEventListener('click', (ev) => {
-        let word = ev.target.getAttribute('data-word');
-        Youdao.addToWordBook(word).then(res => {
-          ev.target.textContent = '添加成功';
-        }).catch(err => {
-        });
-      });
-    }
-
-    if(moreAction) {
-      moreAction.addEventListener('click', (ev) => {
-        if(chrome && chrome.tabs) {
-          chrome.tabs.create({url: resultJson.more});
-        } else {
-          window.open(resultJson.more, '_blank');
-        }
-      });
-    }
+    Popup.audioPlay();
+    Popup.addToWordBook();
+    Popup.displayMore();
   }
 
-  static processResult(queryInput) {
+  static processInput(queryInput) {
     let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
     query = queryInput.value;
     if (!query) return;
@@ -61,16 +31,50 @@ class Popup {
       });
   }
 
+  static audioPlay() {
+    let audioAction = document.querySelector('#wav');
+    if(audioAction) {
+      audioAction.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        let audioNode = document.querySelector('#audio');
+        audioNode.play();
+      });
+    }
+  }
+
+  static addToWordBook() {
+    let addToWordBookAction = document.querySelector('#addToWordBook');
+    if(addToWordBookAction) {
+      addToWordBookAction.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        let word = ev.target.getAttribute('data-word');
+        Youdao.addToWordBook(word).then(res => {
+          ev.target.textContent = '添加成功';
+        }).catch(err => {});
+      });
+    }
+  }
+
+  static displayMore() {
+    let moreAction = document.querySelector('#more');
+    if(moreAction) {
+      let moreUrl = moreAction.getAttribute('data-more');
+      moreAction.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        if(chrome && chrome.tabs) {
+          chrome.tabs.create({url: moreUrl});
+        } else {
+          window.open(resultJson.more, '_blank');
+        }
+      });
+    }
+  }
+
   static onLoad() {
     let form = document.forms.namedItem('dictForm');
     let queryInput = form.query;
     let timeout;
     queryInput.focus();
-
-    form.addEventListener('submit', (ev) => {
-      ev.preventDefault();
-      Popup.processResult(queryInput);
-    });
 
     queryInput.addEventListener('keyup', (ev) => {
       if (Object.is(ev.keyCode, 13)) return;
@@ -80,7 +84,7 @@ class Popup {
       }
 
       timeout = setTimeout(() => {
-        Popup.processResult(queryInput);
+        Popup.processInput(queryInput);
       }, 700);
     });
   }
