@@ -7,6 +7,10 @@ const pngquant = require('imagemin-pngquant');
 const webpack = require('webpack-stream');
 const webpackConf = require('./webpack.config.js');
 
+gulp.task('moveLib', () => {
+  gulp.src('src/lib/**/*.js').pipe(gulp.dest('build/lib'));
+});
+
 gulp.task('jade', () => {
   gulp.src(['src/tpl/popup.jade', 'src/tpl/options.jade'])
     .pipe(jade())
@@ -29,7 +33,7 @@ gulp.task('webpack', () => {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('default', ['jade', 'imagemin', 'webpack'], () => {
+gulp.task('default', ['moveLib', 'jade', 'imagemin', 'webpack'], () => {
   gulp.watch(['./src/tpl/*.jade'], ['jade']);
-  gulp.watch(['./src/tpl/*.jade', './src/style/*.scss', './src/script/*.js', './src/script/*/*.js'], ['webpack']);
+  gulp.watch(['./src/tpl/*.jade', './src/style/*.scss', './src/script/**/*.js'], ['webpack']);
 });

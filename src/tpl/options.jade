@@ -4,14 +4,17 @@ html(lang='en')
     meta(charset='UTF-8')
     title Youdao Dict Options
   body
-    .container
-      .row(style='margin-bottom: 40px;')
+    .container(style='padding: 0 1rem;')
+      div(style='margin-bottom: 50px;')
         p
           input#dblclick(type='checkbox', name='dblclick')
-          label(for='dblclick') &#x53CC;&#x51FB;&#x7FFB;&#x8BD1;
+          label(for='dblclick') 双击翻译
         p
           input#ctrl(type='checkbox', name='ctrl')
-          label(for='ctrl') &#x6309;&#x4F4F; Ctrl &#x7FFB;&#x8BD1;
-    script(src='../lib/jquery/jquery.min.js')
-    script(src='../lib/materialize/js/materialize.min.js')
+          label(for='ctrl') 按住 Ctrl 翻译
+        p
+          input#wordbook(type='checkbox', name='wordbook')
+          label(for='wordbook') 启用有道单词本
+    script(src='lib/jquery/jquery.min.js')
+    script(src='lib/materialize/js/materialize.min.js')
     script(src='js/options.js')

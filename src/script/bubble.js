@@ -1,7 +1,7 @@
 "use strict";
 
 import '../style/bubble.scss';
-import Youdao from './util/Youdao';
+import Youdao from './util/youdao';
 
 class Bubble {
   static renderBubble(rendered) {
@@ -66,7 +66,7 @@ class Bubble {
     });
   }
 
-  static enableDblclick() {
+  static enableDblclick(options) {
     document.addEventListener('dblclick', ev => {
       let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
       if (Object.is(query.toString().trim(), '')) return;
@@ -76,17 +76,16 @@ class Bubble {
       youdao.getContent()
         .then(data => {
           data.loading = false;
+          if(options && options.wordbook) data.wordbook = options.wordbook;
           Bubble.renderBubble(require('../tpl/bubble.jade')(data));
           Bubble.addToWordBook();
         }).catch(err => {
-          Bubble.renderBubble(require('../tpl/bubble.jade')({
-            explains: err
-          }));
+          Bubble.renderBubble(require('../tpl/bubble.jade')({explains: err}));
         });
     });
   }
 
-  static enableKeydown() {
+  static enableKeydown(options) {
     let map = [];
     document.addEventListener('keydown', ev => map.push(ev.keyCode));
     document.addEventListener('keyup', ev => {
@@ -99,7 +98,9 @@ class Bubble {
         youdao.getContent()
           .then(data => {
             data.loading = false;
+            if(options && options.wordbook) data.wordbook = options.wordbook;
             Bubble.renderBubble(require('../tpl/bubble.jade')(data));
+            Bubble.addToWordBook();
           }).catch(err => {
             Bubble.renderBubble(require('../tpl/bubble.jade')({explains: err}));
           });
@@ -123,8 +124,8 @@ class Bubble {
 
   static onLoad() {
     chrome.storage.sync.get(items => {
-      if(items.dblclick) Bubble.enableDblclick();
-      if(items.ctrl) Bubble.enableKeydown();
+      if(items.dblclick) Bubble.enableDblclick({wordbook: items.wordbook});
+      if(items.ctrl) Bubble.enableKeydown({wordbook: items.wordbook});
     });
   }
 }

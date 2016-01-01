@@ -92,10 +92,10 @@ class Youdao {
               resolve(result);
             });
           } else {
-            reject('Search failed');
+            reject('Query failed');
           }
         }, err => {
-          reject('Search failed');
+          reject('Query failed');
         });
     });
   }

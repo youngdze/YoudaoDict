@@ -1,14 +1,26 @@
 "use strict";
 
-// style
-import '../lib/materialize/css/materialize.min.css';
+import '../lib/materialize/sass/materialize.scss';
 import '../style/popup.scss';
-import Youdao from './util/Youdao';
+import Youdao from './util/youdao';
 
 class Popup {
   static renderResult(resultJson) {
     resultWrapper.innerHTML = require('../tpl/popup-result.jade')(resultJson);
-    let addToWordBookAction = document.querySelector('#addToWordBook');
+
+    let audioAction = document.querySelector('#wav'),
+      addToWordBookAction = document.querySelector('#addToWordBook'),
+      moreAction = document.querySelector('#more');
+
+    if(audioAction) {
+      audioAction.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        let audioNode = document.querySelector('#audio');
+        audioNode.src = resultJson.wav;
+        audioNode.play();
+      });
+    }
+
     if(addToWordBookAction) {
       addToWordBookAction.addEventListener('click', (ev) => {
         let word = ev.target.getAttribute('data-word');
@@ -16,6 +28,16 @@ class Popup {
           ev.target.textContent = '添加成功';
         }).catch(err => {
         });
+      });
+    }
+
+    if(moreAction) {
+      moreAction.addEventListener('click', (ev) => {
+        if(chrome && chrome.tabs) {
+          chrome.tabs.create({url: resultJson.more});
+        } else {
+          window.open(resultJson.more, '_blank');
+        }
       });
     }
   }
@@ -30,7 +52,10 @@ class Popup {
     youdao.getContent()
       .then(data => {
         data.loading = false;
-        Popup.renderResult(data);
+        chrome.storage.sync.get(items => {
+          data.wordbook = items.wordbook;
+          Popup.renderResult(data);
+        });
       }).catch(err => {
         Popup.renderResult({loading: false, error: err});
       });

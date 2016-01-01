@@ -6,12 +6,28 @@ body {
   input {
     font-size: 1.5rem !important;
   }
+  .clearfix {
+    &:before,
+    &:after {
+      display: table;
+      content: '';
+    }
+    &:after {
+      clear: both;
+    }
+  }
+  .pull-left {
+    float: left;
+  }
+  .pull-right {
+    float: right;
+  }
   .queryBox {
     margin-bottom: 0;
     .dictForm {
       margin-bottom: 0;
       & > .row {
-        margin-bottom: 10px;
+        margin-bottom: 0;
         & > .input-field {
           margin-top: 0.5rem;
         }
@@ -31,6 +47,9 @@ body {
           display: block;
           margin-bottom: 0.3rem;
           font-style: italic;
+          #wav {
+            padding: 0 5px;
+          }
         }
       }
     }

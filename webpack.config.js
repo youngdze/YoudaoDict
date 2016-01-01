@@ -13,7 +13,7 @@ module.exports = {
     './js/options': ['./src/script/options.js']
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.join(__dirname, 'build'),
     filename: '[name].js'
   },
   module: {
@@ -40,6 +40,6 @@ module.exports = {
   },
 
   plugins: [
-    // new UglifyJsPlugin({compress: {warnings: false}})
+    new UglifyJsPlugin({compress: {warnings: false}})
   ]
 };

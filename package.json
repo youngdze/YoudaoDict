@@ -1,15 +1,15 @@
 {
   "name": "youdao-dict",
-  "version": "0.2.3",
-  "description": "Youdao Dict using Youdao api",
-  "main": "index.js",
+  "version": "0.2.4",
+  "description": "Youdao dictrionary Chrome extension based on Youdao api",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/youngdze/YoudaoDict.git"
   },
   "keywords": [
     "youdao",
-    "dict"
+    "dictionary",
+    "wordbook"
   ],
   "author": "youngdze",
   "license": "MIT",
@@ -17,6 +17,10 @@
     "url": "https://github.com/youngdze/YoudaoDict/issues"
   },
   "homepage": "https://github.com/youngdze/YoudaoDict#readme",
+  "scripts": {
+    "build": "gulp",
+    "test": "mocha"
+  },
   "devDependencies": {
     "babel-core": "^6.3.26",
     "babel-loader": "^6.2.0",

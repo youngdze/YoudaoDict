@@ -12,15 +12,10 @@
           i &nbsp;&nbsp;/#{pronoun}/&nbsp;&nbsp;
             if wav
               a#y-bubble-wav(href='javascript:;', onclick='document.querySelector("#y-audio").src="#{wav}";document.querySelector("#y-audio").play();')
-                svg#Capa_1(version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', x='0px', y='0px', width='1em', height='1em', viewbox='0 0 465.256 465.256', style='enable-background:new 0 0 465.256 465.256; fill: #ffffff; vertical-align: middle;', xml:space='preserve')
+                svg#Layer_1(enable-background='new 0 0 24 24', width='1em', height='1em', version='1.1', viewbox='0 0 24 24', xml:space='preserve', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', style='enable-background:new 0 0 465.256 465.256; fill: #ffffff; vertical-align: text-top;')
                   g
                     g
-                      path(d='M87.742,204.879c-8.668,0-15.701,7.035-15.701,15.701c0,83.252,63.68,151.883,144.886,159.802v53.471h-86.91c-8.666,0-15.701,7.033-15.701,15.701c0,8.664,7.035,15.701,15.701,15.701h102.614h102.617c8.659,0,15.701-7.037,15.701-15.701c0-8.668-7.042-15.701-15.701-15.701h-86.918v-53.471c81.211-7.919,144.889-76.55,144.889-159.802c0-8.666-7.029-15.701-15.701-15.701c-8.664,0-15.701,7.035-15.701,15.701c0,71.23-57.955,129.189-129.185,129.189c-71.236,0-129.185-57.959-129.185-129.189C103.443,211.915,96.416,204.879,87.742,204.879z')
-                      path(d='M222.014,326.098h22.626c46.014,0,83.311-37.297,83.311-83.306H138.704C138.704,288.801,176.001,326.098,222.014,326.098z')
-                      path(d='M245.125,0h-22.632c-46.013,0-83.31,37.297-83.31,83.31h189.253C328.436,37.297,291.13,0,245.125,0z')
-                      rect(x='139.183', y='99.851', width='188.286', height='31.4')
-                      rect(x='139.864', y='146.662', width='188.287', height='31.4')
-                      rect(x='138.485', y='195.067', width='188.279', height='31.4')
+                      path(clip-rule='evenodd', d='M19.779,3.349l-1.111,1.664C20.699,6.663,22,9.179,22,12    c0,2.822-1.301,5.338-3.332,6.988l1.111,1.663C22.345,18.639,24,15.516,24,12C24,8.485,22.346,5.362,19.779,3.349z M17.55,6.687    l-1.122,1.68c0.968,0.913,1.58,2.198,1.58,3.634s-0.612,2.722-1.58,3.635l1.122,1.68C19.047,16.03,20,14.128,20,12    C20,9.873,19.048,7.971,17.55,6.687z M12,1c-1.177,0-1.533,0.684-1.533,0.684S7.406,5.047,5.298,6.531C4.91,6.778,4.484,7,3.73,7    H2C0.896,7,0,7.896,0,9v6c0,1.104,0.896,2,2,2h1.73c0.754,0,1.18,0.222,1.567,0.469c2.108,1.484,5.169,4.848,5.169,4.848    S10.823,23,12,23c1.104,0,2-0.895,2-2V3C14,1.895,13.104,1,12,1z', fill-rule='evenodd')
               audio#y-audio(style='display: none;', src='')
       .y-bubble-explains
         if explains
@@ -38,10 +33,10 @@
                 | #{r.value}
       .y-bubble-more.y-clearfix
         - var wordReg = /^\b[a-zA-Z0-9]+\b$/ig;
-        if wordReg.test(word)
+        if wordReg.test(word) && wordbook
           span.y-pull-left
             svg#Layer_1(version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', x='0px', y='0px', width='.8em', height='1em', viewbox='0 0 512 512', enable-background='new 0 0 512 512', xml:space='preserve' style='fill: #ffffff; vertical-align: text-top; margin: 0 .2em;')
               path(d='M448,0H64C46.328,0,32,14.313,32,32v448c0,17.688,14.328,32,32,32h288l128-128V32C480,14.313,465.688,0,448,0z M352,466.75V384h82.75L352,466.75z M448,352h-96c-17.688,0-32,14.313-32,32v96H64V32h384V352z M96,112c0-8.844,7.156-16,16-16h288c8.844,0,16,7.156,16,16s-7.156,16-16,16H112C103.156,128,96,120.844,96,112z M96,208c0-8.844,7.156-16,16-16h288c8.844,0,16,7.156,16,16s-7.156,16-16,16H112C103.156,224,96,216.844,96,208z M96,304c0-8.844,7.156-16,16-16h288c8.844,0,16,7.156,16,16s-7.156,16-16,16H112C103.156,320,96,312.844,96,304z')
             a#addToWordBookAction(href='javascript:;', data-word='#{word}') 
               | 添加到有道单词本
-        a.y-pull-right(href='#{more}', target='_blank') 更多解释 >>
+        a.y-pull-right(href='#{more}', target='_blank') more >>
