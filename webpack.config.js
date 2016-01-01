@@ -40,6 +40,6 @@ module.exports = {
   },
 
   plugins: [
-    new UglifyJsPlugin({compress: {warnings: false}})
+    // new UglifyJsPlugin({compress: {warnings: false}})
   ]
 };
