@@ -6,22 +6,22 @@
   "version": "0.2.4",
 
   "icons": {
-    "16": "build/img/icon.png",
-    "48": "build/img/icon.png",
-    "128": "build/img/icon.png",
-    "256": "build/img/icon.png"
+    "16": "img/icon.png",
+    "48": "img/icon.png",
+    "128": "img/icon.png",
+    "256": "img/icon.png"
   },
 
   "homepage_url": "https://chrome.google.com/webstore/detail/youdao-dict/geboigdomoihijcamklnhlcgnnpdgkmg",
 
   "background": {
     "persistent": false,
-    "scripts": ["build/js/background.js"]
+    "scripts": ["js/background.js"]
   },
 
   "browser_action": {
-    "default_icon": "build/img/icon.png",
-    "default_popup": "build/popup.html"
+    "default_icon": "img/icon.png",
+    "default_popup": "popup.html"
   },
 
   "permissions": [
@@ -36,15 +36,14 @@
       "matches": ["*://*/*"],
       "all_frames": true,
       "css": [],
-      "js": ["build/js/bubble.js"]
+      "js": ["js/bubble.js"]
     }
   ],
 
-  "web_accessible_resources": [
-  ],
+  "web_accessible_resources": [],
 
   "options_ui": {
-    "page": "build/options.html",
+    "page": "options.html",
     "chrome_style": true
   }
 }

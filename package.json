@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/youngdze/YoudaoDict#readme",
   "scripts": {
-    "build": "gulp",
-    "test": "mocha"
+    "dev": "NODE_ENV=dev gulp",
+    "build": "NODE_ENV=production gulp"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",

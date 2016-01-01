@@ -7,6 +7,12 @@ const pngquant = require('imagemin-pngquant');
 const webpack = require('webpack-stream');
 const webpackConf = require('./webpack.config.js');
 
+const NODE_ENV = process.env.NODE_ENV || 'dev';
+
+gulp.task('manifest', () => {
+  gulp.src('manifest.json').pipe(gulp.dest('build'));
+});
+
 gulp.task('moveLib', () => {
   gulp.src('src/lib/**/*.js').pipe(gulp.dest('build/lib'));
 });
@@ -33,7 +39,10 @@ gulp.task('webpack', () => {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('default', ['moveLib', 'jade', 'imagemin', 'webpack'], () => {
-  gulp.watch(['./src/tpl/*.jade'], ['jade']);
-  gulp.watch(['./src/tpl/*.jade', './src/style/*.scss', './src/script/**/*.js'], ['webpack']);
+gulp.task('default', ['manifest', 'moveLib', 'jade', 'imagemin', 'webpack'], () => {
+  if(Object.is(NODE_ENV, 'dev')) {
+    gulp.watch(['./manifest.json'], ['manifest']);
+    gulp.watch(['./src/tpl/*.jade'], ['jade']);
+    gulp.watch(['./src/tpl/*.jade', './src/style/*.scss', './src/script/**/*.js'], ['webpack']);
+  }
 });
