@@ -28,6 +28,6 @@ class Options {
   let options = document.querySelectorAll('input[type=checkbox]');
   Object.keys(options).forEach(function(key) {
     // detect if is number
-    if (!isNaN(key - 0)) options[key].addEventListener('click', Options.save_options);
+    if (!isNaN(Number(key))) options[key].addEventListener('click', Options.save_options);
   });
 }

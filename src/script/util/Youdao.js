@@ -108,13 +108,15 @@ class Youdao {
     const [noUser, addOne] = ['nouser', 'adddone'];
 
     let headers = new Headers();
-    chrome.cookies.getAll({}, (cookies) => {
-      cookies.forEach(cookie => {
-        if(Object.is(cookie.domain, wordBookDomain)) {
-          headers.append('Cookie', `${cookie.name}=${cookie.value}`);
-        }
+    if(chrome && chrome.cookies) {
+      chrome.cookies.getAll({}, (cookies) => {
+        cookies.forEach(cookie => {
+          if(Object.is(cookie.domain, wordBookDomain)) {
+            headers.append('Cookie', `${cookie.name}=${cookie.value}`);
+          }
+        });
       });
-    });
+    }
 
     return new Promise((resolve, reject) => {
       require('./fetch')(`${addToWordBookApi}${word}`, {
@@ -126,14 +128,18 @@ class Youdao {
         if(res.ok) {
           res.json().then(data => {
             if(Object.is(data.message, noUser)) {
-              chrome.tabs.create({url: wordBookLoginUrl});
-              return reject();
+              if(chrome && chrome.tabs) {
+                chrome.tabs.create({url: wordBookLoginUrl});
+              } else {
+                window.open(wordBookLoginUrl, '_blank');
+              }
+              reject();
             } else if(Object.is(data.message, addOne)) {
-              return resolve();
+              resolve();
             }
           });
         } else {
-          return reject();
+          reject();
         }
       }, err => {
         reject(err);

@@ -7,10 +7,10 @@ const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 module.exports = {
   context: path.join(__dirname),
   entry: {
-    './js/bubble': ['./src/app.js'],
-    './js/popup': ['./src/popup.js'],
-    './js/background': ['./src/background.js'],
-    './js/options': ['./src/options.js']
+    './js/bubble': ['./src/script/bubble.js'],
+    './js/popup': ['./src/script/popup.js'],
+    './js/background': ['./src/script/background.js'],
+    './js/options': ['./src/script/options.js']
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -25,7 +25,7 @@ module.exports = {
         presets: ['es2015', 'stage-0']
       }
     },{
-      test: /\.s?css$/,
+      test: /\.(css|scss)$/,
       loaders: ['style', 'css', 'sass'],
       exclude: /node_modules/
     }, {

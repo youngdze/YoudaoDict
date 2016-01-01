@@ -71,15 +71,13 @@ class Bubble {
       let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
       if (Object.is(query.toString().trim(), '')) return;
 
-      Bubble.renderBubble(require('../tpl/bubble.jade')({
-        loading: true,
-        explains: 'Searching...'
-      }));
+      Bubble.renderBubble(require('../tpl/bubble.jade')({loading: true}));
       let youdao = new Youdao(from, youdaoKey, resType, query);
       youdao.getContent()
         .then(data => {
           data.loading = false;
           Bubble.renderBubble(require('../tpl/bubble.jade')(data));
+          Bubble.addToWordBook();
         }).catch(err => {
           Bubble.renderBubble(require('../tpl/bubble.jade')({
             explains: err
@@ -92,29 +90,44 @@ class Bubble {
     let map = [];
     document.addEventListener('keydown', ev => map.push(ev.keyCode));
     document.addEventListener('keyup', ev => {
-      console.log(ev)
       if (Object.is(map.length, 1) && Object.is(map[0], 17)) {
         let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
         if (Object.is(query.toString().trim(), '')) return;
 
-        Bubble.renderBubble(require('../tpl/bubble.jade')({
-          loading: true,
-          explains: 'Searching...'
-        }));
+        Bubble.renderBubble(require('../tpl/bubble.jade')({loading: true}));
         let youdao = new Youdao(from, youdaoKey, resType, query);
         youdao.getContent()
           .then(data => {
             data.loading = false;
             Bubble.renderBubble(require('../tpl/bubble.jade')(data));
           }).catch(err => {
-            Bubble.renderBubble(require('../tpl/bubble.jade')({
-              explains: err
-            }));
+            Bubble.renderBubble(require('../tpl/bubble.jade')({explains: err}));
           });
       }
       map = [];
     });
   }
+
+  static addToWordBook() {
+    const addToWordBookSuccessText = '添加成功';
+    let addToWordBookAction = document.querySelector('#addToWordBookAction');
+    if(addToWordBookAction) {
+      addToWordBookAction.addEventListener('click', (ev) => {
+        let word = ev.target.getAttribute('data-word');
+        Youdao.addToWordBook(word).then(res => {
+          ev.target.textContent = addToWordBookSuccessText;
+        }).catch(err => {});
+      });
+    }
+  }
+
+  static onLoad() {
+    chrome.storage.sync.get(items => {
+      if(items.dblclick) Bubble.enableDblclick();
+      if(items.ctrl) Bubble.enableKeydown();
+    });
+  }
 }
 
-module.exports = Bubble;
+export default Bubble;
+Bubble.onLoad();
