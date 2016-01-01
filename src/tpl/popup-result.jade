@@ -1,0 +1,43 @@
+if loading
+  .loading.row
+    .col.s12
+      .progress
+        .indeterminate
+.resultBox.row
+  .col.s12
+    .card.blue-grey.darken-1
+      if !loading
+        .resultField.card-content.white-text
+          span.basic.card-title
+            if error
+              | #{error}
+            else
+              if pronoun
+                code.pronoun
+                  | /#{pronoun}/
+                  if wav
+                    a#wav(href='javascript:;')
+                      svg#Layer_1(enable-background='new 0 0 24 24', width='1em', height='1em', version='1.1', viewbox='0 0 24 24', xml:space='preserve', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', style='enable-background:new 0 0 465.256 465.256; fill: #ffffff; vertical-align: text-top;')
+                        g
+                          g
+                            path(clip-rule='evenodd', d='M19.779,3.349l-1.111,1.664C20.699,6.663,22,9.179,22,12    c0,2.822-1.301,5.338-3.332,6.988l1.111,1.663C22.345,18.639,24,15.516,24,12C24,8.485,22.346,5.362,19.779,3.349z M17.55,6.687    l-1.122,1.68c0.968,0.913,1.58,2.198,1.58,3.634s-0.612,2.722-1.58,3.635l1.122,1.68C19.047,16.03,20,14.128,20,12    C20,9.873,19.048,7.971,17.55,6.687z M12,1c-1.177,0-1.533,0.684-1.533,0.684S7.406,5.047,5.298,6.531C4.91,6.778,4.484,7,3.73,7    H2C0.896,7,0,7.896,0,9v6c0,1.104,0.896,2,2,2h1.73c0.754,0,1.18,0.222,1.567,0.469c2.108,1.484,5.169,4.848,5.169,4.848    S10.823,23,12,23c1.104,0,2-0.895,2-2V3C14,1.895,13.104,1,12,1z', fill-rule='evenodd')
+                    audio#audio(style='display: none;', src='#{wav}')
+              if explains
+                if Array.isArray(explains)
+                  each explain in explains
+                    | #{explain}
+                    br
+                else
+                  | #{explains}
+          if relate
+            each r in relate
+              p.web-translation 
+                | #{r.key}:&nbsp;
+                if r.value
+                | #{r.value}
+        if !error
+          .card-action.clearfix
+            - var wordReg = /^\b[a-zA-Z0-9]+\b$/ig;
+            if wordReg.test(word) && wordbook
+              span#addToWordBook.pull-left(data-word='#{word}') 添加到有道单词本
+            span#more.pull-right(data-more='#{more}') more >>
