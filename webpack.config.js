@@ -1,10 +1,10 @@
 'use strict';
 
-const path = require('path');
-const webpack = require('webpack');
+import path from 'path';
+import webpack from 'webpack';
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
-module.exports = {
+export default {
   context: path.join(__dirname),
   entry: {
     './js/bubble': ['./src/script/bubble.js'],
@@ -26,16 +26,16 @@ module.exports = {
       }
     },{
       test: /\.(css|scss)$/,
-      loaders: ['style', 'css', 'sass'],
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      loaders: ['style', 'css', `sass?${['outputStyle=compressed'].join('&')}`]
     }, {
       test: /\.(eot|ttf|woff|woff2|svg)$/,
-      loader: 'file?name=font/[name].[ext]',
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      loader: 'file?name=font/[name].[ext]'
     }, {
       test: /\.jade$/,
-      loader: 'jade',
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      loader: 'jade'
     }]
   },
 
