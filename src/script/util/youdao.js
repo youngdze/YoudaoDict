@@ -1,14 +1,16 @@
 "use strict";
 
+import fetch from './fetch';
+
 class Youdao {
   constructor(from, key, resType, query) {
     [this.from, this.key, this.resType, this.query] = [from, key, resType, query];
     this.requestUrl = `https://fanyi.youdao.com/openapi.do?keyfrom=${this.from}&key=${this.key}&type=data&doctype=${this.resType}&version=1.1&q=`;
   }
 
-  isChinese(query) {
-    const re = /[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi;
-    return re.test(query);
+  isChinese(str) {
+    const re = /^([\u4E00-\u9FA5]|[\uFE30-\uFFA0])$/gi;
+    return re.test(str);
   }
 
   parseJsonContent(res) {
@@ -30,14 +32,7 @@ class Youdao {
     }
     more = `http://dict.youdao.com/search?q=${res.query}`;
 
-    return {
-      word: word,
-      wav: wav,
-      explains: explains,
-      pronoun: pronoun,
-      relate: relate,
-      more: more
-    };
+    return {word, wav, explains, pronoun, relate, more};
   }
 
   parseXmlContent(res) {
@@ -69,21 +64,14 @@ class Youdao {
     }
     more = res.querySelector('query')[0].textContent;
 
-    return {
-      word: word,
-      wav: wav,
-      pronoun: pronoun,
-      explains: explains,
-      relate: relate,
-      more: more
-    };
+    return {word, wav, explains, pronoun, relate, more};
   }
 
   getContent() {
     let _this = this;
 
     return new Promise((resolve, reject) => {
-      require('./fetch')(this.requestUrl + encodeURIComponent(this.query))
+      fetch(`${this.requestUrl}${encodeURIComponent(this.query)}`)
         .then(res => {
           if (res.ok) {
             // TODO judge res type
@@ -119,7 +107,7 @@ class Youdao {
     }
 
     return new Promise((resolve, reject) => {
-      require('./fetch')(`${addToWordBookApi}${word}`, {
+      fetch(`${addToWordBookApi}${word}`, {
         method: 'GET',
         headers: headers,
         mode: 'cors',
