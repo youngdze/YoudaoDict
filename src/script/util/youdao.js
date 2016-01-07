@@ -1,7 +1,5 @@
 "use strict";
 
-import fetch from './fetch';
-
 class Youdao {
   constructor(from, key, resType, query) {
     [this.from, this.key, this.resType, this.query] = [from, key, resType, query];
@@ -9,7 +7,7 @@ class Youdao {
   }
 
   isChinese(str) {
-    const re = /^([\u4E00-\u9FA5]|[\uFE30-\uFFA0])$/gi;
+    const re = /^([\u4E00-\u9FA5]|[\uFE30-\uFFA0])+$/gi;
     return re.test(str);
   }
 
@@ -71,7 +69,7 @@ class Youdao {
     let _this = this;
 
     return new Promise((resolve, reject) => {
-      fetch(`${this.requestUrl}${encodeURIComponent(this.query)}`)
+      require('./fetch')(`${this.requestUrl}${encodeURIComponent(this.query)}`)
         .then(res => {
           if (res.ok) {
             // TODO judge res type
@@ -107,7 +105,7 @@ class Youdao {
     }
 
     return new Promise((resolve, reject) => {
-      fetch(`${addToWordBookApi}${word}`, {
+      require('./fetch')(`${addToWordBookApi}${word}`, {
         method: 'GET',
         headers: headers,
         mode: 'cors',
