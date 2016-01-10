@@ -12,8 +12,8 @@ class Youdao {
   }
 
   parseJsonContent(res) {
-    let word, explains, pronoun, wav, relate = [],
-      more;
+    let word, explains, pronoun, wav, relate = [], more;
+    res = (typeof res === 'string') ? JSON.parse(res) : res;
 
     word = res.query;
     if (!res) {
@@ -34,33 +34,33 @@ class Youdao {
   }
 
   parseXmlContent(res) {
-    let word, explains, pronoun, wav, relate = [],
-      more;
+    let word, explains, pronoun, wav, relate = [], more;
+    res = (new DOMParser()).parseFromString(res, 'text/xml');
 
-    word = res.querySelector('query').textContent;
+    word = res.querySelector('query').textContent.toString().trim();
     if (!res) {
       explains = 'Nothing found.';
     } else if (Object.is(typeof res, 'string')) {
-      explains = res.toString();
+      explains = res.toString().trim();
     } else if (!res.querySelectorAll('basic').length) {
-      explains = res.querySelector('translation').querySelector('paragraph').textContent;
+      explains = res.querySelector('translation').querySelector('paragraph').textContent.toString().trim();
     } else {
       let explainsNode = res.querySelector('basic').querySelector('explains').querySelectorAll('ex');
-      explains = explainsNode.map(v => v.textContent);
-      pronoun = res.querySelector('basic').querySelector('phonetic').textContent || undefined;
+      explains = [...explainsNode].map(v => v.textContent.toString().trim());
+      pronoun = res.querySelector('basic').querySelector('phonetic').textContent.toString().trim() || undefined;
       !this.isChinese(word) && (wav = `https://dict.youdao.com/dictvoice?audio=${word}&type=2`);
 
-      let relates = res.querySelector('web').querySelector('explain');
+      let relates = [...res.querySelector('web').querySelector('explain')];
       if (relates.length) {
         relate = relates.map(v => {
           let dummy = {};
-          dummy.key = v.querySelector('key').textContent;
-          dummy.relate = [...v.querySelector('value')].map(v => val.textContent);
+          dummy.key = v.querySelector('key').textContent.toString().trim();
+          dummy.relate = [...v.querySelector('value')].map(v => val.textContent.toString().trim());
           return dummy;
         });
       }
     }
-    more = res.querySelector('query')[0].textContent;
+    more = res.querySelector('query')[0].textContent.toString().trim();
 
     return {word, wav, explains, pronoun, relate, more};
   }
@@ -73,8 +73,13 @@ class Youdao {
         .then(res => {
           if (res.ok) {
             // TODO judge res type
-            res.json().then(data => {
-              let result = _this.parseJsonContent(data);
+            res.text().then(data => {
+              let result;
+              if(Object.is(_this.resType, 'json')) {
+                result = _this.parseJsonContent(data);
+              } else {
+                result = _this.parseXmlContent(data);
+              }
               resolve(result);
             });
           } else {

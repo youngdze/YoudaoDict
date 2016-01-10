@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<youdao-fanyi>
+  <errorCode>0</errorCode>
+  <query>
+    <![CDATA[document]]>
+  </query>
+  <!-- 有道翻译 -->
+  <translation>
+    <paragraph>
+      <![CDATA[文档]]>
+    </paragraph>
+  </translation>
+  <!-- 有道词典-基本词典 -->
+  <basic>
+    <!-- 音标 -->
+    <phonetic>
+      <![CDATA['dɒkjʊm(ə)nt]]></phonetic>
+        <!-- 美式音标 -->
+        <us-phonetic><![CDATA['dɔkjumənt, 'dɔkjument]]></us-phonetic>
+        <!-- 英式音标 -->
+        <uk-phonetic><![CDATA['dɒkjʊm(ə)nt]]>
+    </uk-phonetic>
+    <!-- 基本释义 -->
+    <explains>
+      <ex>
+        <![CDATA[n. 文件，公文；[计] 文档；证件]]>
+      </ex>
+      <ex>
+        <![CDATA[vt. 用文件证明]]>
+      </ex>
+    </explains>
+  </basic>
+  <!-- 有道词典-网络释义 -->
+  <web>
+    <explain>
+      <key>
+        <![CDATA[document]]>
+      </key>
+      <value>
+        <ex>
+          <![CDATA[文件]]>
+        </ex>
+        <ex>
+          <![CDATA[文档]]>
+        </ex>
+        <ex>
+          <![CDATA[文献]]>
+        </ex>
+      </value>
+    </explain>
+    <explain>
+      <key>
+        <![CDATA[Document retrieval]]>
+      </key>
+      <value>
+        <ex>
+          <![CDATA[文献检索]]>
+        </ex>
+        <ex>
+          <![CDATA[文献检索]]>
+        </ex>
+        <ex>
+          <![CDATA[文本信息检索]]>
+        </ex>
+      </value>
+    </explain>
+    <explain>
+      <key>
+        <![CDATA[False document]]>
+      </key>
+      <value>
+        <ex>
+          <![CDATA[伪书]]>
+        </ex>
+        <ex>
+          <![CDATA[伪书]]>
+        </ex>
+        <ex>
+          <![CDATA[复制]]>
+        </ex>
+      </value>
+    </explain>
+  </web>
+</youdao-fanyi>

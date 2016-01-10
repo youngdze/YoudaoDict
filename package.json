@@ -19,7 +19,8 @@
   "homepage": "https://github.com/youngdze/YoudaoDict#readme",
   "scripts": {
     "dev": "NODE_ENV=dev gulp",
-    "build": "NODE_ENV=production gulp"
+    "build": "NODE_ENV=production gulp",
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
