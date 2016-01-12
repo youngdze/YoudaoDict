@@ -31,6 +31,6 @@ npm run test
 * 双击或按 Ctrl 对选择区域进行翻译
 * 添加生词至有道单词本
 
-## 版权
+## 版权 LICENSE
 
-* DO WHATEVER YOU WANT
+* MIT
