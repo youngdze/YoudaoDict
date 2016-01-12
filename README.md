@@ -17,6 +17,14 @@ npm run build
 ```shell
 npm run dev
 ```
+## Test
+
+```shell
+curl http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar --create-dirs -o bin/selenium-server-standalone.jar
+npm run webdriver
+# set up another shell
+npm run test
+```
 
 在 Chrome 扩展页面点击载入开发中的扩展，选择 `build` 目录。
 

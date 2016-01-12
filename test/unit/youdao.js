@@ -2,7 +2,7 @@ import {readFileSync} from 'fs';
 import {join as pathJoin} from 'path';
 import 'mocha';
 import {expect} from 'chai';
-import Youdao from '../src/script/util/youdao.js';
+import Youdao from '../../src/script/util/youdao.js';
 
 describe(`Youdao`, () => {
   const [from, resType, query, youdaoKey] = [`YoungdzeBlog`, `json`, `test`, 498418215];

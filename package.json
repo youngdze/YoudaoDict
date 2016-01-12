@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/youngdze/YoudaoDict#readme",
   "scripts": {
+    "postinstall": "curl http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar --create-dirs -o bin/selenium-server-standalone.jar",
     "dev": "NODE_ENV=dev gulp",
-    "build": "NODE_ENV=production gulp",
-    "test": "NODE_ENV=test mocha --compilers js:babel-core/register"
+    "build": "NODE_ENV=production gulp build",
+    "webdriver": "java -jar bin/selenium-server-standalone.jar",
+    "test": "NODE_ENV=test mocha --reporter nyan --recursive --compilers js:babel-core/register"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
@@ -34,10 +36,12 @@
     "gulp": "^3.9.0",
     "gulp-imagemin": "^2.4.0",
     "gulp-jade": "^1.1.0",
+    "gulp-rimraf": "^0.2.0",
     "imagemin-pngquant": "^4.2.0",
     "jade": "^1.11.0",
     "jade-loader": "^0.8.0",
     "mocha": "^2.3.4",
+    "nightwatch": "^0.8.15",
     "node-sass": "^3.4.2",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
