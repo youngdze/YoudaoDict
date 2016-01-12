@@ -2,6 +2,7 @@
 
 import gulp from 'gulp';
 import jade from 'gulp-jade';
+import rimraf from 'gulp-rimraf';
 import imagemin from 'gulp-imagemin';
 import pngquant from 'imagemin-pngquant';
 import webpack from 'webpack-stream';
@@ -9,11 +10,12 @@ import webpackConf from './webpack.config.js';
 
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
-gulp.task('manifest', () => {
-  gulp.src('manifest.json').pipe(gulp.dest('build'));
+gulp.task('clean', () => {
+  gulp.src('build/**/*.map', {read: false}).pipe(rimraf({force: true}));
 });
 
-gulp.task('moveLib', () => {
+gulp.task('move', () => {
+  gulp.src('manifest.json').pipe(gulp.dest('build'));
   gulp.src('src/lib/**/*.js').pipe(gulp.dest('build/lib'));
 });
 
@@ -39,10 +41,10 @@ gulp.task('webpack', () => {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('default', ['manifest', 'moveLib', 'jade', 'imagemin', 'webpack'], () => {
-  if(Object.is(NODE_ENV, 'dev')) {
-    gulp.watch(['./manifest.json'], ['manifest']);
-    gulp.watch(['./src/tpl/*.jade'], ['jade']);
-    gulp.watch(['./src/tpl/*.jade', './src/style/*.scss', './src/script/**/*.js'], ['webpack']);
-  }
+gulp.task('default', ['move', 'jade', 'imagemin', 'webpack'], () => {
+  gulp.watch(['./manifest.json'], ['move']);
+  gulp.watch(['./src/tpl/*.jade'], ['jade']);
+  gulp.watch(['./src/tpl/*.jade', './src/style/*.scss', './src/script/**/*.js'], ['webpack']);
 });
+
+gulp.task('build', ['clean', 'move', 'jade', 'imagemin', 'webpack']);

@@ -2,9 +2,11 @@
 
 import path from 'path';
 import webpack from 'webpack';
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
-export default {
+const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+const NODE_ENV = process.env.NODE_ENV || 'dev';
+
+let conf = {
   context: path.join(__dirname),
   entry: {
     './js/bubble': ['./src/script/bubble.js'],
@@ -39,7 +41,20 @@ export default {
     }]
   },
 
-  plugins: [
-    // new UglifyJsPlugin({compress: {warnings: false}})
-  ]
+  plugins: []
 };
+
+if(Object.is(NODE_ENV, 'production')) {
+  let plugins = conf.plugins;
+  plugins.push(new UglifyJsPlugin({compress: {warnings: false}}));
+  conf = Object.assign({}, conf, {plugins});
+} else {
+  conf = Object.assign({}, conf, {
+    debug: true,
+    cache: true,
+    devtool: 'source-map',
+    node: {console: true}
+  });
+}
+
+export default conf;
