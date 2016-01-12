@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/youngdze/YoudaoDict#readme",
   "scripts": {
-    "postinstall": "curl http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar --create-dirs -o bin/selenium-server-standalone.jar",
     "dev": "NODE_ENV=dev gulp",
     "build": "NODE_ENV=production gulp build",
     "webdriver": "java -jar bin/selenium-server-standalone.jar",

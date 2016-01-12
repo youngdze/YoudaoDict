@@ -1,10 +1,5 @@
 # YoudaoDict
 
-```shell
-npm install
-npm run build
-```
-
 自制有道词典 Chrome 扩展，使用[有道词典 api](http://fanyi.youdao.com/openapi)
 
 ## 安装
@@ -15,8 +10,12 @@ npm run build
 ## 开发
 
 ```shell
+npm install
 npm run dev
 ```
+
+在 Chrome 扩展页面点击载入开发中的扩展，选择 `build` 目录。
+
 ## Test
 
 ```shell
@@ -25,8 +24,6 @@ npm run webdriver
 # set up another shell
 npm run test
 ```
-
-在 Chrome 扩展页面点击载入开发中的扩展，选择 `build` 目录。
 
 ## 功能
 
