@@ -1,7 +1,9 @@
+'use strict';
+
 import 'mocha';
 import {expect} from 'chai';
 import fetch from 'node-fetch';
-import Youdao from '../../src/script/util/youdao';
+import Youdao from '../src/script/util/youdao';
 
 describe(`Youdao`, () => {
   const [FROM, DOCTYPE, QUERY, KEY] = [`YoungdzeBlog`, `json`, `require`, 498418215];
@@ -10,7 +12,7 @@ describe(`Youdao`, () => {
 
   let youdao = new Youdao(FROM, KEY, DOCTYPE, QUERY);
 
-  describe(`#isChinese`, () => {
+  describe(`#isChinese()`, () => {
     it(`should be Chinese`, () => {
       expect(youdao.isChinese(`摩卡`)).to.equal(true);
       expect(youdao.isChinese(`摩卡摩卡摩卡摩卡摩卡摩卡摩卡摩卡摩卡摩卡`)).to.equal(true);
@@ -28,17 +30,17 @@ describe(`Youdao`, () => {
     });
   });
 
-  describe(`#parseJsonContent`, () => {
+  describe(`#parseJsonContent()`, () => {
     let parsedJson = {};
 
-    it('fetch json', (done) => {
+    before((done) => {
       fetch(REQ_URL).then(res => res.json().then(json => {
         parsedJson = youdao.parseJsonContent(json);
         done();
       }));
     });
 
-    it(`should has necessary own property`, () => {
+    it(`should has necessary properties`, () => {
       expect(parsedJson).to.have.ownProperty(`word`);
       expect(parsedJson).to.have.ownProperty(`explains`);
       expect(parsedJson).to.have.ownProperty(`pronoun`);
@@ -46,39 +48,18 @@ describe(`Youdao`, () => {
       expect(parsedJson).to.have.ownProperty(`more`);
     });
 
-    it(`property "word" is valid`, () => {
-      let word = parsedJson.word;
-      expect(word).to.be.a('string');
-    });
-
-    it('property "wav" is valid', () => {
-      let wav = parsedJson.wav;
-      expect(wav).to.match(URL_REG);
-    });
-
-    it('property "explains" valid', () => {
-      let explains = parsedJson.explains;
-      expect(explains).to.be.an('array');
-    });
-
-    it('property "pronoun" is valid', () => {
-      let pronoun = parsedJson.pronoun;
-      expect(pronoun).to.be.a('string');
-    });
-
-    it('property "relate" is valid', () => {
-      let relates = parsedJson.relate;
-      expect(relates).to.be.an('array');
-      relates.forEach(it => {
+    it('should has valid properties', () => {
+      expect(parsedJson.word).to.be.a('string');
+      expect(parsedJson.wav).to.match(URL_REG);
+      expect(parsedJson.explains).to.be.an('array');
+      expect(parsedJson.pronoun).to.be.a('string');
+      expect(parsedJson.relate).to.be.an('array');
+      parsedJson.relate.forEach(it => {
         expect(it).to.has.ownProperty('value').and.has.ownProperty('key');
         expect(it.value).to.be.an('array');
         expect(it.key).to.be.a('string');
       });
-    });
-
-    it('property "more" is valid', () => {
-      let more = parsedJson.more;
-      expect(more).to.match(URL_REG);
+      expect(parsedJson.more).to.match(URL_REG);
     });
   });
 });

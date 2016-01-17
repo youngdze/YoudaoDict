@@ -2,6 +2,7 @@
 
 import gulp from 'gulp';
 import jade from 'gulp-jade';
+import mocha from 'gulp-mocha';
 import rimraf from 'gulp-rimraf';
 import imagemin from 'gulp-imagemin';
 import pngquant from 'imagemin-pngquant';
@@ -41,6 +42,11 @@ gulp.task('webpack', () => {
     .pipe(gulp.dest('build'));
 });
 
+gulp.task('mocha', () => {
+  gulp.src('./test/**/*.js', {read: false})
+    .pipe(mocha({reporter: 'nyan'}));
+});
+
 gulp.task('default', ['move', 'jade', 'imagemin', 'webpack'], () => {
   gulp.watch(['./manifest.json'], ['move']);
   gulp.watch(['./src/tpl/*.jade'], ['jade']);
@@ -48,3 +54,4 @@ gulp.task('default', ['move', 'jade', 'imagemin', 'webpack'], () => {
 });
 
 gulp.task('build', ['clean', 'move', 'jade', 'imagemin', 'webpack']);
+gulp.task('test', ['mocha']);
