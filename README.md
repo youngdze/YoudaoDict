@@ -1,10 +1,5 @@
 # YoudaoDict
 
-```shell
-npm install
-npm run build
-```
-
 自制有道词典 Chrome 扩展，使用[有道词典 api](http://fanyi.youdao.com/openapi)
 
 ## 安装
@@ -15,17 +10,24 @@ npm run build
 ## 开发
 
 ```shell
+npm install
 npm run dev
 ```
 
 在 Chrome 扩展页面点击载入开发中的扩展，选择 `build` 目录。
 
+## Test
+
+```shell
+npm run test
+```
+
 ## 功能
 
 * 点击扩展图标输入进行翻译
-* 双击或按 Ctrl 对选择区域进行翻译
+* 双击或按设置的按键(默认为 CTRL)对选择区域进行翻译
 * 添加生词至有道单词本
 
-## 版权
+## 版权 LICENSE
 
-* DO WHATEVER YOU WANT
+* MIT

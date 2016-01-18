@@ -6,14 +6,14 @@ class Youdao {
     this.requestUrl = `https://fanyi.youdao.com/openapi.do?keyfrom=${this.from}&key=${this.key}&type=data&doctype=${this.resType}&version=1.1&q=`;
   }
 
-  isChinese(query) {
-    const re = /[\u4E00-\u9FA5]|[\uFE30-\uFFA0]/gi;
-    return re.test(query);
+  isChinese(str) {
+    const re = /^([\u4E00-\u9FA5]|[\uFE30-\uFFA0])+$/gi;
+    return re.test(str);
   }
 
   parseJsonContent(res) {
-    let word, explains, pronoun, wav, relate = [],
-      more;
+    let word, explains, pronoun, wav, relate = [], more;
+    res = (typeof res === 'string') ? JSON.parse(res) : res;
 
     word = res.query;
     if (!res) {
@@ -30,65 +30,56 @@ class Youdao {
     }
     more = `http://dict.youdao.com/search?q=${res.query}`;
 
-    return {
-      word: word,
-      wav: wav,
-      explains: explains,
-      pronoun: pronoun,
-      relate: relate,
-      more: more
-    };
+    return {word, wav, explains, pronoun, relate, more};
   }
 
   parseXmlContent(res) {
-    let word, explains, pronoun, wav, relate = [],
-      more;
+    let word, explains, pronoun, wav, relate = [], more;
+    res = (new DOMParser()).parseFromString(res, 'text/xml');
 
-    word = res.querySelector('query').textContent;
+    word = res.querySelector('query').textContent.toString().trim();
     if (!res) {
       explains = 'Nothing found.';
     } else if (Object.is(typeof res, 'string')) {
-      explains = res.toString();
+      explains = res.toString().trim();
     } else if (!res.querySelectorAll('basic').length) {
-      explains = res.querySelector('translation').querySelector('paragraph').textContent;
+      explains = res.querySelector('translation').querySelector('paragraph').textContent.toString().trim();
     } else {
       let explainsNode = res.querySelector('basic').querySelector('explains').querySelectorAll('ex');
-      explains = explainsNode.map(v => v.textContent);
-      pronoun = res.querySelector('basic').querySelector('phonetic').textContent || undefined;
+      explains = [...explainsNode].map(v => v.textContent.toString().trim());
+      pronoun = res.querySelector('basic').querySelector('phonetic').textContent.toString().trim() || undefined;
       !this.isChinese(word) && (wav = `https://dict.youdao.com/dictvoice?audio=${word}&type=2`);
 
-      let relates = res.querySelector('web').querySelector('explain');
+      let relates = [...res.querySelector('web').querySelector('explain')];
       if (relates.length) {
         relate = relates.map(v => {
           let dummy = {};
-          dummy.key = v.querySelector('key').textContent;
-          dummy.relate = [...v.querySelector('value')].map(v => val.textContent);
+          dummy.key = v.querySelector('key').textContent.toString().trim();
+          dummy.relate = [...v.querySelector('value')].map(v => val.textContent.toString().trim());
           return dummy;
         });
       }
     }
-    more = res.querySelector('query')[0].textContent;
+    more = res.querySelector('query')[0].textContent.toString().trim();
 
-    return {
-      word: word,
-      wav: wav,
-      pronoun: pronoun,
-      explains: explains,
-      relate: relate,
-      more: more
-    };
+    return {word, wav, explains, pronoun, relate, more};
   }
 
   getContent() {
     let _this = this;
 
     return new Promise((resolve, reject) => {
-      require('./fetch')(this.requestUrl + encodeURIComponent(this.query))
+      fetch(`${this.requestUrl}${encodeURIComponent(this.query)}`)
         .then(res => {
           if (res.ok) {
             // TODO judge res type
-            res.json().then(data => {
-              let result = _this.parseJsonContent(data);
+            res.text().then(data => {
+              let result;
+              if(Object.is(_this.resType, 'json')) {
+                result = _this.parseJsonContent(data);
+              } else {
+                result = _this.parseXmlContent(data);
+              }
               resolve(result);
             });
           } else {
@@ -102,7 +93,7 @@ class Youdao {
 
   static addToWordBook(word) {
     const wordBookLoginUrl = 'http://account.youdao.com/login?service=dict&back_url=http://dict.youdao.com/wordbook/wordlist%3Fkeyfrom%3Dnull';
-    const addToWordBookApi = 'http://dict.youdao.com/wordbook/ajax?action=addword&q=';
+    const addToWordBookApi = 'https://dict.youdao.com/wordbook/ajax?action=addword&q=';
     const wordBookDomain = 'dict.youdao.com';
     // I think the api is maked by an intern: adddone => addone
     const [noUser, addOne] = ['nouser', 'adddone'];
@@ -133,9 +124,9 @@ class Youdao {
               } else {
                 window.open(wordBookLoginUrl, '_blank');
               }
-              reject();
+              resolve({added: false});
             } else if(Object.is(data.message, addOne)) {
-              resolve();
+              resolve({added: true});
             }
           });
         } else {

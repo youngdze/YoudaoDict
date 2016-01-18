@@ -43,13 +43,24 @@ class Popup {
   }
 
   static addToWordBook() {
+    const addToWordBookSuccessText = '添加成功';
+    const added = 'added';
+
     let addToWordBookAction = document.querySelector('#addToWordBook');
     if(addToWordBookAction) {
       addToWordBookAction.addEventListener('click', (ev) => {
         ev.preventDefault();
+        if(Object.is(ev.target.getAttribute('data-add-status'), added)) return;
+
         let word = ev.target.getAttribute('data-word');
+        let spinner = document.querySelector('#ySpinner');
+        spinner.className = spinner.className.replace(' hide', '');
         Youdao.addToWordBook(word).then(res => {
-          ev.target.textContent = '添加成功';
+          if(res.added) {
+            ev.target.setAttribute('data-add-status', added);
+            ev.target.textContent = addToWordBookSuccessText;
+          }
+          spinner.className += ' hide';
         }).catch(err => {});
       });
     }

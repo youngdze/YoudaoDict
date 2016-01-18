@@ -1,10 +1,12 @@
 'use strict';
 
-const path = require('path');
-const webpack = require('webpack');
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+import path from 'path';
+import webpack from 'webpack';
 
-module.exports = {
+const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+const NODE_ENV = process.env.NODE_ENV || 'dev';
+
+let conf = {
   context: path.join(__dirname),
   entry: {
     './js/bubble': ['./src/script/bubble.js'],
@@ -26,20 +28,33 @@ module.exports = {
       }
     },{
       test: /\.(css|scss)$/,
-      loaders: ['style', 'css', 'sass'],
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      loaders: ['style', 'css', `sass?${['outputStyle=compressed'].join('&')}`]
     }, {
       test: /\.(eot|ttf|woff|woff2|svg)$/,
-      loader: 'file?name=font/[name].[ext]',
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      loader: 'file?name=font/[name].[ext]'
     }, {
       test: /\.jade$/,
-      loader: 'jade',
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      loader: 'jade'
     }]
   },
 
-  plugins: [
-    new UglifyJsPlugin({compress: {warnings: false}})
-  ]
+  plugins: []
 };
+
+if(Object.is(NODE_ENV, 'production')) {
+  let plugins = conf.plugins;
+  plugins.push(new UglifyJsPlugin({compress: {warnings: false}}));
+  conf = Object.assign({}, conf, {plugins});
+} else {
+  conf = Object.assign({}, conf, {
+    debug: true,
+    cache: true,
+    devtool: 'source-map',
+    node: {console: true}
+  });
+}
+
+export default conf;
