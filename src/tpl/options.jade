@@ -10,11 +10,18 @@ html(lang='en')
           input#dblclick(type='checkbox', name='dblclick')
           label(for='dblclick') 双击翻译
         p
-          input#ctrl(type='checkbox', name='ctrl')
-          label(for='ctrl') 按住 Ctrl 翻译
+          input#shortcut(type='checkbox', name='shortcut')
+          label(for='shortcut')
+            | 按住
+            input#shortcut1.shortcut-input(type='text', name='shortcut' value='CTRL')
+            | +
+            input#shortcut2.shortcut-input(type='text', name='shortcut' value='')
+            | 翻译(单键或组合键)
+          
         p
           input#wordbook(type='checkbox', name='wordbook')
           label(for='wordbook') 启用有道单词本
+          
     script(src='lib/jquery/jquery.min.js')
     script(src='lib/materialize/js/materialize.min.js')
     script(src='js/options.js')

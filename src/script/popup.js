@@ -51,10 +51,16 @@ class Popup {
       addToWordBookAction.addEventListener('click', (ev) => {
         ev.preventDefault();
         if(Object.is(ev.target.getAttribute('data-add-status'), added)) return;
+
         let word = ev.target.getAttribute('data-word');
+        let spinner = document.querySelector('#ySpinner');
+        spinner.className = spinner.className.replace(' hide', '');
         Youdao.addToWordBook(word).then(res => {
-          ev.target.setAttribute('data-add-status', added);
-          ev.target.textContent = addToWordBookSuccessText;
+          if(res.added) {
+            ev.target.setAttribute('data-add-status', added);
+            ev.target.textContent = addToWordBookSuccessText;
+          }
+          spinner.className += ' hide';
         }).catch(err => {});
       });
     }

@@ -69,7 +69,7 @@ class Youdao {
     let _this = this;
 
     return new Promise((resolve, reject) => {
-      require('./fetch')(`${this.requestUrl}${encodeURIComponent(this.query)}`)
+      fetch(`${this.requestUrl}${encodeURIComponent(this.query)}`)
         .then(res => {
           if (res.ok) {
             // TODO judge res type
@@ -124,9 +124,9 @@ class Youdao {
               } else {
                 window.open(wordBookLoginUrl, '_blank');
               }
-              reject();
+              resolve({added: false});
             } else if(Object.is(data.message, addOne)) {
-              resolve();
+              resolve({added: true});
             }
           });
         } else {

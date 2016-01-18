@@ -69,42 +69,40 @@ class Bubble {
     Bubble.addToWordBook();
   }
 
-  static enableDblclick(options) {
-    document.addEventListener('dblclick', ev => {
-      let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
-      if (Object.is(query.toString().trim(), '')) return;
+  static doTranslate(ev, options) {
+    let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
+    if (Object.is(query.toString().trim(), '')) return;
 
-      Bubble.renderBubble(require('../tpl/bubble.jade')({loading: true}));
-      let youdao = new Youdao(from, youdaoKey, resType, query);
-      youdao.getContent()
-        .then(data => {
-          data.loading = false;
-          if(options && options.wordbook) data.wordbook = options.wordbook;
-          Bubble.renderBubble(require('../tpl/bubble.jade')(data));
-        }).catch(err => {
-          Bubble.renderBubble(require('../tpl/bubble.jade')({explains: err}));
-        });
-    });
+    Bubble.renderBubble(require('../tpl/bubble.jade')({loading: true}));
+    let youdao = new Youdao(from, youdaoKey, resType, query);
+    youdao.getContent()
+      .then(data => {
+        data.loading = false;
+        if(options && options.wordbook) data.wordbook = options.wordbook;
+        Bubble.renderBubble(require('../tpl/bubble.jade')(data));
+      }).catch(err => {
+        Bubble.renderBubble(require('../tpl/bubble.jade')({explains: err}));
+      });
+  }
+
+  static enableDblclick(options) {
+    document.addEventListener('dblclick', (ev) => Bubble.doTranslate(ev, options));
   }
 
   static enableKeydown(options) {
     let map = [];
     document.addEventListener('keydown', ev => map.push(ev.keyCode));
     document.addEventListener('keyup', ev => {
-      if (Object.is(map.length, 1) && Object.is(map[0], 17)) {
-        let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
-        if (Object.is(query.toString().trim(), '')) return;
-
-        Bubble.renderBubble(require('../tpl/bubble.jade')({loading: true}));
-        let youdao = new Youdao(from, youdaoKey, resType, query);
-        youdao.getContent()
-          .then(data => {
-            data.loading = false;
-            if(options && options.wordbook) data.wordbook = options.wordbook;
-            Bubble.renderBubble(require('../tpl/bubble.jade')(data));
-          }).catch(err => {
-            Bubble.renderBubble(require('../tpl/bubble.jade')({explains: err}));
-          });
+      if(!options.shortcut1 && !options.shortcut2) {
+        return;
+      } else if(!options.shortcut1 || !options.shortcut2) {
+        if (Object.is(map.length, 1) && (Object.is(map[0], options.shortcut1) || Object.is(map[0], options.shortcut2))) {
+          Bubble.doTranslate(ev, options);
+        }
+      } else {
+        if (Object.is(map.length, 2) && Object.is(map[0], options.shortcut1) && Object.is(map[1], options.shortcut2)) {
+          Bubble.doTranslate(ev, options);
+        }
       }
       map = [];
     });
@@ -129,22 +127,28 @@ class Bubble {
       addToWordBookAction.addEventListener('click', (ev) => {
         ev.preventDefault();
         if(Object.is(ev.target.getAttribute('data-add-status'), added)) return;
+
         let word = ev.target.getAttribute('data-word');
+        let spinner = document.querySelector('#ySpinner');
+        spinner.className = spinner.className.replace(' hide', '');
         Youdao.addToWordBook(word).then(res => {
-          ev.target.setAttribute('data-add-status', added);
-          ev.target.textContent = addToWordBookSuccessText;
+          if(res.added) {
+            ev.target.setAttribute('data-add-status', added);
+            ev.target.textContent = addToWordBookSuccessText;
+          }
+          spinner.className += ' hide';
         }).catch(err => {});
       });
     }
   }
 
-  static onLoad() {
+  static init() {
     chrome.storage.sync.get(items => {
-      if(items.dblclick) Bubble.enableDblclick({wordbook: items.wordbook});
-      if(items.ctrl) Bubble.enableKeydown({wordbook: items.wordbook});
+      if(items.dblclick) Bubble.enableDblclick(items);
+      if(items.shortcut) Bubble.enableKeydown(items);
     });
   }
 }
 
 export default Bubble;
-Bubble.onLoad();
+Bubble.init();

@@ -12,7 +12,7 @@
           i &nbsp;&nbsp;/#{pronoun}/&nbsp;&nbsp;
             if wav
               a#y-bubble-wav(href='javascript:;')
-                include ./svg/audio
+                include ./mixin/audio
                 +audio()
               audio#y-audio(style='display: none;', src='#{wav}')
       .y-bubble-explains
@@ -33,8 +33,9 @@
         - var wordReg = /^\b[a-zA-Z0-9]+\b$/ig;
         if wordReg.test(word) && wordbook
           span.y-pull-left
-            include ./svg/notebook
+            include ./mixin/notebook
             +notebook()
-            a#addToWordBookAction(href='javascript:;', data-word='#{word}') 
-              | 添加到有道单词本
+            a#addToWordBookAction(href='javascript:;', data-word='#{word}') 添加到有道单词本
+            include ./mixin/loading
+            +loading('hide')
         a.y-pull-right(href='#{more}', target='_blank') more >>

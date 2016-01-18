@@ -3,10 +3,10 @@ if loading
     .col.s12
       .progress
         .indeterminate
-.resultBox.row
-  .col.s12
-    .card.blue-grey.darken-1
-      if !loading
+else
+  .resultBox.row
+    .col.s12
+      .card.blue-grey.darken-1
         .resultField.card-content.white-text
           span.basic.card-title
             if error
@@ -17,7 +17,7 @@ if loading
                   | /#{pronoun}/
                   if wav
                     a#wav(href='javascript:;')
-                      include ./svg/audio
+                      include ./mixin/audio
                       +audio()
                     audio#audio(style='display: none;', src='#{wav}')
               if explains
@@ -38,4 +38,6 @@ if loading
             - var wordReg = /^\b[a-zA-Z0-9]+\b$/ig;
             if wordReg.test(word) && wordbook
               span#addToWordBook.pull-left(data-word='#{word}') 添加到有道单词本
+              include ./mixin/loading
+              +loading('hide')
             span#more.pull-right(data-more='#{more}') more >>
