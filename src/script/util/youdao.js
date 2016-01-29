@@ -95,7 +95,7 @@ class Youdao {
     const wordBookLoginUrl = 'http://account.youdao.com/login?service=dict&back_url=http://dict.youdao.com/wordbook/wordlist%3Fkeyfrom%3Dnull';
     const addToWordBookApi = 'https://dict.youdao.com/wordbook/ajax?action=addword&q=';
     const wordBookDomain = 'dict.youdao.com';
-    // I think the api is maked by an intern: adddone => addone
+    // I think the api is made by an intern: adddone => addone
     const [noUser, addOne] = ['nouser', 'adddone'];
 
     let headers = new Headers();

@@ -27,7 +27,7 @@ let conf = {
         presets: ['es2015', 'stage-0']
       }
     },{
-      test: /\.(css|scss)$/,
+      test: /\.s?css$/,
       exclude: /node_modules/,
       loaders: ['style', 'css', `sass?${['outputStyle=compressed'].join('&')}`]
     }, {
