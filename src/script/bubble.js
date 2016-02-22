@@ -108,6 +108,12 @@ class Bubble {
     });
   }
 
+  static enableSelectToTranslate(options) {
+    document.addEventListener('mouseup', ev => {
+      Bubble.doTranslate(ev, options);
+    });
+  }
+
   static audioPlay() {
     let audioAction = document.querySelector('#y-bubble-wav');
     if(audioAction) {
@@ -146,6 +152,7 @@ class Bubble {
     chrome.storage.sync.get(items => {
       if(items.dblclick) Bubble.enableDblclick(items);
       if(items.shortcut) Bubble.enableKeydown(items);
+      if(items.selectToTranslate) Bubble.enableSelectToTranslate(items);
     });
   }
 }

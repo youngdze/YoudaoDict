@@ -31,14 +31,12 @@
     "storage"
   ],
 
-  "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "all_frames": true,
-      "css": [],
-      "js": ["js/bubble.js"]
-    }
-  ],
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "all_frames": true,
+    "css": [],
+    "js": ["js/bubble.js"]
+  }],
 
   "web_accessible_resources": [],
 
