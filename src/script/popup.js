@@ -1,6 +1,6 @@
 "use strict";
 
-import '../lib/materialize/sass/materialize.scss';
+import '../lib/materialize/css/materialize.min.css';
 import '../style/popup.scss';
 import Youdao from './util/youdao';
 

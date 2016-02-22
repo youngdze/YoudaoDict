@@ -27,7 +27,7 @@ let conf = {
         presets: ['es2015', 'stage-0']
       }
     },{
-      test: /\.(css|scss)$/,
+      test: /\.s?css$/,
       exclude: /node_modules/,
       loaders: ['style', 'css', `sass?${['outputStyle=compressed'].join('&')}`]
     }, {
@@ -47,14 +47,15 @@ let conf = {
 if(Object.is(NODE_ENV, 'production')) {
   let plugins = conf.plugins;
   plugins.push(new UglifyJsPlugin({compress: {warnings: false}}));
-  conf = Object.assign({}, conf, {plugins});
+  conf = {...conf, ...plugins};
 } else {
-  conf = Object.assign({}, conf, {
+  conf = {
+    ...conf,
     debug: true,
     cache: true,
     devtool: 'source-map',
     node: {console: true}
-  });
+  };
 }
 
 export default conf;

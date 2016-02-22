@@ -17,7 +17,9 @@ html(lang='en')
             | +
             input#shortcut2.shortcut-input(type='text', name='shortcut' value='')
             | 翻译(单键或组合键)
-          
+        p
+          input#selectToTranslate(type='checkbox', name='selectToTranslate')
+          label(for='selectToTranslate') 划词翻译
         p
           input#wordbook(type='checkbox', name='wordbook')
           label(for='wordbook') 启用有道单词本

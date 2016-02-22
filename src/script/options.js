@@ -1,6 +1,6 @@
 "use strict";
 
-import '../lib/materialize/sass/materialize.scss';
+import '../lib/materialize/css/materialize.min.css';
 import '../style/options.scss';
 
 const KEY_CODE = {
@@ -17,11 +17,13 @@ class Options {
     this.shortcut = document.querySelector('#shortcut');
     this.shortcut1 = document.querySelector('#shortcut1');
     this.shortcut2 = document.querySelector('#shortcut2');
+    this.selectToTranslate = document.querySelector('#selectToTranslate');
     this.wordbook = document.querySelector('#wordbook');
 
     chrome.storage.sync.get((items) => {
       this.dblclick.checked = items.dblclick;
       this.shortcut.checked = items.shortcut;
+      this.selectToTranslate.checked = items.selectToTranslate;
       this.wordbook.checked = items.wordbook;
 
       switch(items.shortcut1) {
@@ -56,11 +58,12 @@ class Options {
 
   saveOptions() {
     let dblclick = this.dblclick.checked;
+    let selectToTranslate = this.selectToTranslate.checked;
     let wordbook = this.wordbook.checked;
     let shortcut = this.shortcut.checked;
     let shortcut1 = Object.is(this.shortcut1.keyCode, KEY_CODE['BACKSPACE']) ? null : this.shortcut1.keyCode;
     let shortcut2 = Object.is(this.shortcut2.keyCode, KEY_CODE['BACKSPACE']) ? null : this.shortcut2.keyCode;
-    chrome.storage.sync.set({dblclick, wordbook, shortcut, shortcut1, shortcut2}, () => {
+    chrome.storage.sync.set({dblclick, selectToTranslate, wordbook, shortcut, shortcut1, shortcut2}, () => {
       Materialize.toast('设置成功', 500);
     });
   }
