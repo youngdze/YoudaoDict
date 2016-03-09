@@ -7,7 +7,8 @@ const KEY_CODE = {
   BACKSPACE: 8,
   CTRL: 17,
   SHIFT: 16,
-  ALT: 18
+  ALT: 18,
+  CMD: 91
 };
 
 class Options {
@@ -50,6 +51,9 @@ class Options {
         case KEY_CODE['ALT']:
           this.shortcut2.value = 'ALT';
           break;
+        case KEY_CODE['CMD']:
+          this.shortcut2.value = 'CMD';
+          break;
         default:
           this.shortcut2.value = String.fromCharCode(items.shortcut2).toUpperCase();
       }
@@ -81,6 +85,9 @@ class Options {
         break;
       case KEY_CODE['SHIFT']:
         ele.value = 'SHIFT';
+        break;
+      case KEY_CODE['CMD']:
+        ele.value = 'CMD';
         break;
       default:
         ele.value = String.fromCharCode(ev.keyCode);
