@@ -148,12 +148,17 @@ class Bubble {
     }
   }
 
+  static popupQueryInput() {
+    
+  }
+
   static init() {
     chrome.storage.sync.get(items => {
       if(items.dblclick) Bubble.enableDblclick(items);
       if(items.shortcut) Bubble.enableKeydown(items);
       if(items.selectToTranslate) Bubble.enableSelectToTranslate(items);
     });
+    Bubble.popupQueryInput();
   }
 }
 
