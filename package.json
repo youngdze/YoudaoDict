@@ -1,6 +1,6 @@
 {
   "name": "youdao-dict",
-  "version": "0.2.6",
+  "version": "0.2.61",
   "description": "Youdao dictrionary Chrome extension based on Youdao api",
   "repository": {
     "type": "git",
