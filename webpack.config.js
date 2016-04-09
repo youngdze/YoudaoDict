@@ -1,9 +1,6 @@
-'use strict';
-
 import path from 'path';
-import webpack from 'webpack';
+import UglifyJsPlugin from 'webpack/lib/optimize/UglifyJsPlugin';
 
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
 let conf = {
@@ -26,13 +23,11 @@ let conf = {
       query: {
         presets: ['es2015', 'stage-0']
       }
-    },{
+    }, {
       test: /\.s?css$/,
-      exclude: /node_modules/,
       loaders: ['style', 'css', `sass?${['outputStyle=compressed'].join('&')}`]
     }, {
       test: /\.(eot|ttf|woff|woff2|svg)$/,
-      exclude: /node_modules/,
       loader: 'file?name=font/[name].[ext]'
     }, {
       test: /\.jade$/,
@@ -44,7 +39,7 @@ let conf = {
   plugins: []
 };
 
-if(Object.is(NODE_ENV, 'production')) {
+if (Object.is(NODE_ENV, 'production')) {
   let plugins = conf.plugins;
   plugins.push(new UglifyJsPlugin({compress: {warnings: false}}));
   conf = {...conf, ...plugins};
