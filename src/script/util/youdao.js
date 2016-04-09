@@ -11,6 +11,13 @@ class Youdao {
     return re.test(str);
   }
 
+  removeReferrer() {
+    let meta = document.createElement('meta');
+    meta.name = 'referrer';
+    meta.content = 'no-referrer';
+    document.querySelector('head').appendChild(meta);
+  }
+
   parseJsonContent(res) {
     let word, explains, pronoun, wav, relate = [], more;
     res = (typeof res === 'string') ? JSON.parse(res) : res;
@@ -67,12 +74,12 @@ class Youdao {
 
   getContent() {
     let _this = this;
+    _this.removeReferrer();
 
     return new Promise((resolve, reject) => {
       fetch(`${this.requestUrl}${encodeURIComponent(this.query)}`)
         .then(res => {
           if (res.ok) {
-            // TODO judge res type
             res.text().then(data => {
               let result;
               if(Object.is(_this.resType, 'json')) {
