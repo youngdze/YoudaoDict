@@ -110,7 +110,10 @@ class Bubble {
 
   static enableSelectToTranslate(options) {
     document.addEventListener('mouseup', ev => {
-      Bubble.doTranslate(ev, options);
+      setTimeout(() => {
+        let bubble = document.querySelector('#y-bubble');
+        if(!bubble) Bubble.doTranslate(ev, options);
+      });
     });
   }
 
@@ -149,7 +152,7 @@ class Bubble {
   }
 
   static popupQueryInput() {
-    
+
   }
 
   static init() {
