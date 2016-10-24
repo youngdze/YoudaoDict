@@ -5,6 +5,9 @@ import '../style/popup.scss';
 import Youdao from './util/youdao';
 
 class Popup {
+  static keyfrom = 'YoungdzeBlog';
+  static key = 498418215;
+
   static renderResult(resultJson) {
     resultWrapper.innerHTML = require('../tpl/popup-result.jade')(resultJson);
     Popup.audioPlay();
@@ -13,7 +16,7 @@ class Popup {
   }
 
   static processInput(queryInput) {
-    let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
+    let [from, resType, query, youdaoKey] = [Popup.keyfrom, 'json', window.getSelection().toString().trim(), Popup.key];
     query = queryInput.value;
     if (!query) return;
     Popup.renderResult({loading: true});
@@ -27,7 +30,11 @@ class Popup {
           Popup.renderResult(data);
         });
       }).catch(err => {
-        Popup.renderResult({loading: false, error: err});
+        Popup.renderResult({
+          word: query,
+          loading: false,
+          error: err
+        });
       });
   }
 
@@ -81,7 +88,18 @@ class Popup {
     }
   }
 
+  static init() {
+    chrome.storage.sync.get(items => {
+      if (items.usePersonalKey) {
+        Popup.keyfrom = items.keyfrom || Popup.keyfrom;
+        Popup.key = items.key || Popup.key;
+      }
+    });
+  }
+
   static onLoad() {
+    Popup.init();
+
     let form = document.forms.namedItem('dictForm');
     let queryInput = form.query;
     let timeout;
@@ -97,6 +115,16 @@ class Popup {
       timeout = setTimeout(() => {
         Popup.processInput(queryInput);
       }, 700);
+    });
+
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+
+      Popup.processInput(queryInput);
     });
   }
 }

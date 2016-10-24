@@ -29,15 +29,14 @@ else
                   | #{explains}
           if relate
             each r in relate
-              p.web-translation 
+              p.web-translation
                 | #{r.key}:&nbsp;
                 if r.value
                 | #{r.value}
-        if !error
-          .card-action.clearfix
-            - var wordReg = /^\b[a-zA-Z0-9]+\b$/ig;
-            if wordReg.test(word) && wordbook
-              span#addToWordBook.pull-left(data-word='#{word}') 添加到有道单词本
-              include ./mixin/loading
-              +loading('hide')
-            span#more.pull-right(data-more='#{more}') more >>
+        .card-action.clearfix
+          - var wordReg = /^\b[a-zA-Z0-9]+\b$/ig;
+          if wordReg.test(word) && wordbook
+            span#addToWordBook.pull-left(data-word='#{word}') 添加到有道单词本
+            include ./mixin/loading
+            +loading('hide')
+          span#more.pull-right(data-more='http://dict.youdao.com/search?q=#{word}') more >>

@@ -22,7 +22,7 @@ class Youdao {
     let word, explains, pronoun, wav, relate = [], more;
     res = (typeof res === 'string') ? JSON.parse(res) : res;
 
-    word = res.query;
+    word = this.query;
     if (!res) {
       explains = 'Nothing found.';
     } else if (Object.is(typeof res, 'string')) {
@@ -80,13 +80,13 @@ class Youdao {
       fetch(`${this.requestUrl}${encodeURIComponent(this.query)}`)
         .then(res => {
           if (res.ok) {
-            res.text().then(data => {
+            res.json().then(data => {
               let result;
-              if(Object.is(_this.resType, 'json')) {
-                result = _this.parseJsonContent(data);
-              } else {
-                result = _this.parseXmlContent(data);
+              if (data.errorCode !== 0) {
+                reject('Query failed');
+                return;
               }
+              result = _this.parseJsonContent(data);
               resolve(result);
             });
           } else {

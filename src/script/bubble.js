@@ -4,6 +4,9 @@ import '../style/bubble.scss';
 import Youdao from './util/youdao';
 
 class Bubble {
+  static keyfrom = 'YoungdzeBlog';
+  static key = 498418215;
+
   static renderBubble(tpl) {
     if (document.querySelector('#y-bubble')) {
       let unnecessaryBubble = document.querySelector('#y-bubble');
@@ -70,18 +73,23 @@ class Bubble {
   }
 
   static doTranslate(ev, options) {
-    let [from, resType, query, youdaoKey] = ['YoungdzeBlog', 'json', window.getSelection().toString().trim(), 498418215];
+    let [from, resType, query, youdaoKey] = [Bubble.keyfrom, 'json', window.getSelection().toString().trim(), Bubble.key];
     if (Object.is(query.toString().trim(), '')) return;
 
-    Bubble.renderBubble(require('../tpl/bubble.jade')({loading: true}));
+    Bubble.renderBubble(require('../tpl/bubble.jade')({
+      loading: true
+    }));
     let youdao = new Youdao(from, youdaoKey, resType, query);
     youdao.getContent()
       .then(data => {
         data.loading = false;
-        if(options && options.wordbook) data.wordbook = options.wordbook;
+        if (options && options.wordbook) data.wordbook = options.wordbook;
         Bubble.renderBubble(require('../tpl/bubble.jade')(data));
       }).catch(err => {
-        Bubble.renderBubble(require('../tpl/bubble.jade')({explains: err}));
+        Bubble.renderBubble(require('../tpl/bubble.jade')({
+          word: query,
+          explains: err
+        }));
       });
   }
 
@@ -93,9 +101,9 @@ class Bubble {
     let map = [];
     document.addEventListener('keydown', ev => map.push(ev.keyCode));
     document.addEventListener('keyup', ev => {
-      if(!options.shortcut1 && !options.shortcut2) {
+      if (!options.shortcut1 && !options.shortcut2) {
         return;
-      } else if(!options.shortcut1 || !options.shortcut2) {
+      } else if (!options.shortcut1 || !options.shortcut2) {
         if (Object.is(map.length, 1) && (Object.is(map[0], options.shortcut1) || Object.is(map[0], options.shortcut2))) {
           Bubble.doTranslate(ev, options);
         }
@@ -112,14 +120,14 @@ class Bubble {
     document.addEventListener('mouseup', ev => {
       setTimeout(() => {
         let bubble = document.querySelector('#y-bubble');
-        if(!bubble) Bubble.doTranslate(ev, options);
+        if (!bubble) Bubble.doTranslate(ev, options);
       });
     });
   }
 
   static audioPlay() {
     let audioAction = document.querySelector('#y-bubble-wav');
-    if(audioAction) {
+    if (audioAction) {
       audioAction.addEventListener('click', (ev) => {
         ev.preventDefault();
         let audioNode = document.querySelector('#y-audio');
@@ -132,16 +140,16 @@ class Bubble {
     const addToWordBookSuccessText = '添加成功';
     const added = 'added';
     let addToWordBookAction = document.querySelector('#addToWordBookAction');
-    if(addToWordBookAction) {
+    if (addToWordBookAction) {
       addToWordBookAction.addEventListener('click', (ev) => {
         ev.preventDefault();
-        if(Object.is(ev.target.getAttribute('data-add-status'), added)) return;
+        if (Object.is(ev.target.getAttribute('data-add-status'), added)) return;
 
         let word = ev.target.getAttribute('data-word');
         let spinner = document.querySelector('#ySpinner');
         spinner.className = spinner.className.replace(' hide', '');
         Youdao.addToWordBook(word).then(res => {
-          if(res.added) {
+          if (res.added) {
             ev.target.setAttribute('data-add-status', added);
             ev.target.textContent = addToWordBookSuccessText;
           }
@@ -157,9 +165,13 @@ class Bubble {
 
   static init() {
     chrome.storage.sync.get(items => {
-      if(items.dblclick) Bubble.enableDblclick(items);
-      if(items.shortcut) Bubble.enableKeydown(items);
-      if(items.selectToTranslate) Bubble.enableSelectToTranslate(items);
+      if (items.dblclick) Bubble.enableDblclick(items);
+      if (items.shortcut) Bubble.enableKeydown(items);
+      if (items.selectToTranslate) Bubble.enableSelectToTranslate(items);
+      if (items.usePersonalKey) {
+        Bubble.keyfrom = items.keyfrom || Bubble.keyfrom;
+        Bubble.key = items.key || Bubble.key;
+      }
     });
     Bubble.popupQueryInput();
   }

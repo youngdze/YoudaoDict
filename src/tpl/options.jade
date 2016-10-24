@@ -23,7 +23,15 @@ html(lang='en')
         p
           input#wordbook(type='checkbox', name='wordbook')
           label(for='wordbook') 启用有道单词本
-          
+        p
+          input#usePersonalKey(type='checkbox', name='usePersonalKey')
+          label(for='usePersonalKey')
+            | 使用我的 key &nbsp;
+            a(href='http://fanyi.youdao.com/openapi?path=data-mode') 如何申请?
+        .input-field
+          input#keyfrom.validate(type='text', name='keyfrom', placeholder='keyfrom')
+          input#key.validate(type='text', name='key', placeholder='key')
+
     script(src='lib/jquery/jquery.min.js')
     script(src='lib/materialize/js/materialize.min.js')
     script(src='js/options.js')
