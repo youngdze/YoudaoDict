@@ -3,7 +3,7 @@
 
   "name": "Youdao Dict",
   "description": "有道词典 Chrome 扩展",
-  "version": "0.3.1",
+  "version": "0.3.2",
 
   "icons": {
     "16": "img/icon.png",
