@@ -65,10 +65,6 @@ class Options {
           this.shortcut2.value = String.fromCharCode(items.shortcut2).toUpperCase();
       }
     });
-
-    this.prevUsePersonalKeyVal = this.usePersonalKey.value;
-    this.prevKeyfrom = this.keyfrom.value;
-    this.prevKey = this.key.value;
   }
 
   _saveOptions() {
@@ -78,6 +74,20 @@ class Options {
     let shortcut = this.shortcut.checked;
     let shortcut1 = Object.is(this.shortcut1.keyCode, KEY_CODE['BACKSPACE']) ? null : this.shortcut1.keyCode;
     let shortcut2 = Object.is(this.shortcut2.keyCode, KEY_CODE['BACKSPACE']) ? null : this.shortcut2.keyCode;
+
+    chrome.storage.sync.set({
+      dblclick,
+      selectToTranslate,
+      wordbook,
+      shortcut,
+      shortcut1,
+      shortcut2
+    }, () => {
+      Materialize.toast('设置成功', 500);
+    });
+  }
+
+  _saveKey() {
     let usePersonalKey = this.usePersonalKey.checked;
     let keyfrom = this.keyfrom.value;
     let key = this.key.value;
@@ -92,38 +102,19 @@ class Options {
             key
           }, () => {
             Materialize.toast('设置成功', 500);
-
-            this.prevUsePersonalKeyVal = usePersonalKey;
-            this.prevKeyfrom = keyfrom;
-            this.prevKey = key;
           });
         }).catch(err => {
-          usePersonalKey = this.usePersonalKey.checked = false;
+          this.usePersonalKey.checked = false;
           Materialize.toast('设置失败，请检查参数', 1000);
         });
-      } else {
-        usePersonalKey = this.usePersonalKey.checked = false;
       }
-      return;
-    } else if (usePersonalKey !== this.prevUsePersonalKeyVal) {
+    } else {
       chrome.storage.sync.set({
         usePersonalKey
       }, () => {
         Materialize.toast('设置成功', 500);
       });
-      return;
     }
-
-    chrome.storage.sync.set({
-      dblclick,
-      selectToTranslate,
-      wordbook,
-      shortcut,
-      shortcut1,
-      shortcut2
-    }, () => {
-      Materialize.toast('设置成功', 500);
-    });
   }
 
   _handleKeyup(ev, ele) {
@@ -179,14 +170,13 @@ class Options {
   }
 
   _touchUserKey() {
-    let usePersonalKey = this.usePersonalKey.checked = false;
+    let usePersonalKey = this.usePersonalKey.checked;
 
-    if (usePersonalKey !== prevUsePersonalKeyVal) {
+    if (usePersonalKey) {
+      usePersonalKey = this.usePersonalKey.checked = false;
       chrome.storage.sync.set({
         usePersonalKey
-      }, () => {
-        this.prevUsePersonalKeyVal = usePersonalKey;
-      });
+      }, () => {});
     }
   }
 
@@ -201,7 +191,17 @@ class Options {
     this.key.addEventListener('keydown', this._touchUserKey.bind(this));
 
     Object.keys(this.options).forEach((key) => {
-      this.options[key].addEventListener('click', this._saveOptions.bind(this));
+      let elem = this.options[key],
+        name = elem.getAttribute('name');
+
+      switch (name) {
+        case 'usePersonalKey':
+          this.options[key].addEventListener('click', this._saveKey.bind(this));
+          break;
+        default:
+          this.options[key].addEventListener('click', this._saveOptions.bind(this));
+          break;
+      }
     });
   }
 }

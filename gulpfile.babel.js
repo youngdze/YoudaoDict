@@ -22,9 +22,7 @@ gulp.task('move', () => {
 
 gulp.task('jade', () => {
   gulp.src(['src/tpl/popup.jade', 'src/tpl/options.jade'])
-    .pipe(jade({
-      pretty: true
-    }))
+    .pipe(jade())
     .pipe(gulp.dest('build'));
 });
 
