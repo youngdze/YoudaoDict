@@ -15,7 +15,7 @@ class Youdao {
     let meta = document.createElement('meta');
     meta.name = 'referrer';
     meta.content = 'no-referrer';
-    document.querySelector('head').appendChild(meta);
+    this.noReferrer = document.querySelector('head').appendChild(meta);
   }
 
   parseJsonContent(res) {
@@ -94,6 +94,11 @@ class Youdao {
           }
         }, err => {
           reject('Query failed');
+        }).then(res => {
+          if (_this.noReferrer) {
+            _this.noReferrer.remove();
+            _this.noReferrer = null;
+          }
         });
     });
   }
