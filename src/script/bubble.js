@@ -38,12 +38,12 @@ class Bubble {
     }
 
     if (rect.top < bubble.offsetHeight) {
-      bubbleTop = rect.top + window.scrollY + rect.height + 8;
+      bubbleTop = rect.top + window.scrollY + rect.height + 10;
 
       let bubbleArrow = document.querySelector('#y-arrow');
       bubbleArrow.style.borderBottom = '10px solid rgba(13, 13, 13, .8)';
       bubbleArrow.style.borderTop = 0;
-      bubbleArrow.style.top = '-8px';
+      bubbleArrow.style.top = '-10px';
       bubbleArrow.style.left = `${arrowRelativeLeft}px`;
     } else {
       bubbleTop = rect.top + window.scrollY - bubble.offsetHeight - 10;
