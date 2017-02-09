@@ -5,7 +5,7 @@ html(lang='en')
     title YoudaoDict popup
   body
     .queryBox.row
-      form.dictForm.col.s12(action='get', name='dictForm')
+      form.dictForm.col.s12(action='get', name='dictForm', autocomplete="off")
         .row
           .input-field.col.s12
             input.query.validate(type='text', name='query', placeholder='Query')
