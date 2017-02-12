@@ -24,6 +24,7 @@ class Options {
     this.usePersonalKey = document.querySelector('#usePersonalKey');
     this.keyfrom = document.querySelector('input#keyfrom');
     this.key = document.querySelector('input#key');
+    this.shortcutConfig = document.querySelector('#shortcutConfig');
 
     chrome.storage.sync.get((items) => {
       this.dblclick.checked = items.dblclick;
@@ -180,6 +181,13 @@ class Options {
     }
   }
 
+  _goShortcutConfig() {
+    chrome.tabs.create({
+      url: 'chrome://extensions/configureCommands'
+    });
+    return this;
+  }
+
   init() {
     this.shortcut1.addEventListener('click', (ev) => this.shortcut1.select());
     this.shortcut1.addEventListener('keyup', (ev) => this._handleKeyup(ev, shortcut1));
@@ -189,6 +197,7 @@ class Options {
     this.keyfrom.addEventListener('keydown', this._touchUserKey.bind(this));
     this.key.addEventListener('blur', (ev) => this._trimInput(ev.target));
     this.key.addEventListener('keydown', this._touchUserKey.bind(this));
+    this.shortcutConfig.addEventListener('click', this._goShortcutConfig.bind(this));
 
     Object.keys(this.options).forEach((key) => {
       let elem = this.options[key],

@@ -1,7 +1,7 @@
 'use strict';
 
 import gulp from 'gulp';
-import jade from 'gulp-jade';
+import pug from 'gulp-pug';
 import mocha from 'gulp-mocha';
 import rimraf from 'gulp-rimraf';
 import imagemin from 'gulp-imagemin';
@@ -20,9 +20,9 @@ gulp.task('move', () => {
   gulp.src('src/lib/**/*.js').pipe(gulp.dest('build/lib'));
 });
 
-gulp.task('jade', () => {
-  gulp.src(['src/tpl/popup.jade', 'src/tpl/options.jade'])
-    .pipe(jade())
+gulp.task('pug', () => {
+  gulp.src(['src/tpl/popup.pug', 'src/tpl/options.pug'])
+    .pipe(pug())
     .pipe(gulp.dest('build'));
 });
 
@@ -47,11 +47,11 @@ gulp.task('mocha', () => {
     .pipe(mocha({reporter: 'nyan'}));
 });
 
-gulp.task('default', ['move', 'jade', 'imagemin', 'webpack'], () => {
+gulp.task('default', ['move', 'pug', 'imagemin', 'webpack'], () => {
   gulp.watch(['./manifest.json'], ['move']);
-  gulp.watch(['./src/tpl/*.jade'], ['jade']);
-  gulp.watch(['./src/tpl/*.jade', './src/style/*.scss', './src/script/**/*.js'], ['webpack']);
+  gulp.watch(['./src/tpl/*.pug'], ['pug']);
+  gulp.watch(['./src/tpl/*.pug', './src/style/*.scss', './src/script/**/*.js'], ['webpack']);
 });
 
-gulp.task('build', ['clean', 'move', 'jade', 'imagemin', 'webpack']);
+gulp.task('build', ['clean', 'move', 'pug', 'imagemin', 'webpack']);
 gulp.task('test', ['mocha']);

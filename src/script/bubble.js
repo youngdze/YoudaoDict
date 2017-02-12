@@ -76,7 +76,7 @@ class Bubble {
     let [from, resType, query, youdaoKey] = [Bubble.keyfrom, 'json', window.getSelection().toString().trim(), Bubble.key];
     if (Object.is(query.toString().trim(), '')) return;
 
-    Bubble.renderBubble(require('../tpl/bubble.jade')({
+    Bubble.renderBubble(require('../tpl/bubble.pug')({
       loading: true
     }));
     let youdao = new Youdao(from, youdaoKey, resType, query);
@@ -84,9 +84,9 @@ class Bubble {
       .then(data => {
         data.loading = false;
         if (options && options.wordbook) data.wordbook = options.wordbook;
-        Bubble.renderBubble(require('../tpl/bubble.jade')(data));
+        Bubble.renderBubble(require('../tpl/bubble.pug')(data));
       }).catch(err => {
-        Bubble.renderBubble(require('../tpl/bubble.jade')({
+        Bubble.renderBubble(require('../tpl/bubble.pug')({
           word: query,
           explains: err
         }));
