@@ -19,20 +19,20 @@ let conf = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel',
+      loader: 'babel-loader',
       query: {
         presets: ['es2015', 'stage-0']
       }
     }, {
       test: /\.s?css$/,
-      loaders: ['style', 'css', `sass?${['outputStyle=compressed'].join('&')}`]
+      loaders: ['style-loader', 'css-loader', `sass-loader?${['outputStyle=compressed'].join('&')}`]
     }, {
       test: /\.(eot|ttf|woff|woff2|svg)$/,
-      loader: 'file?name=font/[name].[ext]'
+      loader: 'file-loader?name=font/[name].[ext]'
     }, {
-      test: /\.jade$/,
+      test: /\.pug$/,
       exclude: /node_modules/,
-      loader: 'jade'
+      loader: 'babel-loader?presets[]=es2015!pug-loader'
     }]
   },
 

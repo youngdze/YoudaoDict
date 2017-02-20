@@ -9,7 +9,7 @@ class Popup {
   static key = 498418215;
 
   static renderResult(resultJson) {
-    resultWrapper.innerHTML = require('../tpl/popup-result.jade')(resultJson);
+    resultWrapper.innerHTML = require('../tpl/popup-result.pug')(resultJson);
     Popup.audioPlay();
     Popup.addToWordBook();
     Popup.displayMore();
