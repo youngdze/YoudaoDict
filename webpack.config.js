@@ -32,7 +32,7 @@ let conf = {
     }, {
       test: /\.pug$/,
       exclude: /node_modules/,
-      loader: 'pug-loader'
+      loader: 'babel-loader?presets[]=es2015!pug-loader'
     }]
   },
 

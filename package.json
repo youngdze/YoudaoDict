@@ -1,6 +1,6 @@
 {
   "name": "youdao-dict",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Youdao dictrionary Chrome extension based on Youdao api",
   "repository": {
     "url": "git+https://github.com/youngdze/YoudaoDict.git",
@@ -23,10 +23,10 @@
     "test": "NODE_ENV=test gulp test"
   },
   "devDependencies": {
-    "babel-core": "^6.22.1",
+    "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",
-    "babel-loader": "^6.2.10",
-    "babel-polyfill": "^6.22.0",
+    "babel-loader": "^6.3.2",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
     "chai": "^3.5.0",
